@@ -3,6 +3,9 @@ package com.digitalpersona.onetouch.ui.swing.sample.UISupport;
 import com.digitalpersona.onetouch.*;
 import com.digitalpersona.onetouch.ui.swing.*;
 
+import db.MysqlConnect;
+
+import javax.net.ssl.SSLEngineResult.Status;
 import javax.swing.*;
 
 import java.awt.*;
@@ -44,9 +47,28 @@ public class EnrollmentDialog
                 if (reasonToFail != null) {
 //                  e.setStopCapture(false);
                     throw new DPFPEnrollmentVetoException(reasonToFail);
-                } else
+                } else{
                     EnrollmentDialog.this.templates.put(e.getFingerIndex(), e.getTemplate());
+                    System.out.println("Enrolo?");
+                    
+                    //TODO:: ACA GUARDO DIRECTAMENTE ????
+                    DPFPTemplate dedo = e.getTemplate();
+                    DPFPFingerIndex indiceDedo = e.getFingerIndex();
+                    
+                    System.out.println(indiceDedo);
+                    byte[] dedoSerialized = null;
+                    
+                    if(dedo != null){
+                    	dedoSerialized = dedo.serialize();                       
+                    }
+                    MysqlConnect conection = MysqlConnect.getDbCon();
+                    conection.saveFinger(dedoSerialized, indiceDedo.toString());                    
+                }                
             }
+            
+            /*public void fingerToSave(OnEnroll e){
+            	
+            }*/
         });
 
 		getContentPane().setLayout(new BorderLayout());

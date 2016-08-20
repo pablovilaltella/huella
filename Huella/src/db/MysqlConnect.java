@@ -1,5 +1,6 @@
 package db;
 
+import com.digitalpersona.onetouch.DPFPTemplate;
 import com.mysql.jdbc.Connection;
 
 import java.math.BigInteger;
@@ -81,8 +82,7 @@ public final class MysqlConnect {
     	ResultSet res = null;
 		try {
 			res = this.query(query);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+		} catch (SQLException e) {			
 			e.printStackTrace();
 		}
 		return res;
@@ -108,7 +108,6 @@ public final class MysqlConnect {
 				correcto = validatePassword(pass, storedPassword);				
 			}
 		} catch (SQLException | NoSuchAlgorithmException | InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     	return correcto;
@@ -150,7 +149,7 @@ public final class MysqlConnect {
 			if (res.next()){*/
 			//}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+
 			e.printStackTrace();
 		}
     	
@@ -217,4 +216,34 @@ public final class MysqlConnect {
         }
         return bytes;
     }
+    
+    
+    public boolean saveFinger(byte[] dedo, String indiceDedo){
+    	/*TODO VER COMO SE GUARDA EL DEDO*/
+    	try {
+    		// the mysql insert statement
+    	      String query = " insert into huellas (id_persona, huella, nro_dedo)"
+    	        + " values (?, ?, ?)";
+
+    	      Integer idPersona = 1; // Id Persona    	      
+    	          	      
+    	      // create the mysql insert preparedstatement
+    	      PreparedStatement preparedStmt = conn.prepareStatement(query);
+    	          	      
+    	      System.out.println();
+
+    	      preparedStmt.setInt(1, idPersona);
+    	      preparedStmt.setBytes (2, dedo);
+    	      preparedStmt.setString(3, indiceDedo);
+
+    	      // execute the preparedstatement
+    	      preparedStmt.execute();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+    	return true;
+    }
+    
 }
