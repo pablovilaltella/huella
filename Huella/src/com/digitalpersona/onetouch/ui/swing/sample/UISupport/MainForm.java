@@ -25,7 +25,7 @@ public class MainForm
     private SpinnerNumberModel maxCount = new SpinnerNumberModel(DPFPFingerIndex.values().length, 0, DPFPFingerIndex.values().length, 1);
     private JSpinner maxCountSpinner;
 
-    private final JButton enrollButton = new JButton("Enroll Fingerprints");
+    private final JButton enrollButton = new JButton("Enrolar Huellas");
     private final JButton verifyButton = new JButton("Verify Fingerprint");
     private SpinnerNumberModel farRequested = 
     	new SpinnerNumberModel(	DPFPVerification.MEDIUM_SECURITY_FAR, 1, DPFPVerification.PROBABILITY_ONE, 100);
@@ -233,10 +233,10 @@ public class MainForm
         dummy.add(verificationConfigPanel);
         dummy.add(Box.createVerticalStrut(4));
 
-        setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
-        add(Box.createHorizontalStrut(4));
-        add(dummy);
-        add(Box.createHorizontalStrut(4));
+        getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
+        getContentPane().add(Box.createHorizontalStrut(4));
+        getContentPane().add(dummy);
+        getContentPane().add(Box.createHorizontalStrut(4));
     	
         pack();
         setLocationRelativeTo(null);
