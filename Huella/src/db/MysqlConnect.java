@@ -3,29 +3,70 @@ package db;
 import com.digitalpersona.onetouch.DPFPTemplate;
 import com.mysql.jdbc.Connection;
 
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.math.BigInteger;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.sql.*;
+import java.util.Properties;
 
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 /**
  * @desc A singleton database access class for MySQL
- * @author Ramindu
  */
 public final class MysqlConnect {
     public Connection conn;
     private Statement statement;
     public static MysqlConnect db;
     private MysqlConnect() {
-        String url= "jdbc:mysql://localhost:3306/";
-        String dbName = "huella";
-        String driver = "com.mysql.jdbc.Driver";
-        String userName = "huella";
-        String password = "Hu3ll41403";
-        String options = "autoReconnect=true&useSSL=true";
+    	
+    	// Traigo el config
+    	Properties prop = new Properties();
+    	InputStream input = null;
+
+    	try {
+
+    		String filename = "resources/config.properties";
+    		input = MysqlConnect.class.getClassLoader().getResourceAsStream(filename);
+    		if(input==null){
+    	            System.out.println("Sorry, unable to find " + filename);
+    		    return;
+    		}
+
+    		// load a properties file
+    		prop.load(input);
+
+    		// get the property value and print it out
+    		/*System.out.println(prop.getProperty("server"));
+    		System.out.println(prop.getProperty("driver"));
+    		System.out.println(prop.getProperty("database"));
+    		System.out.println(prop.getProperty("dbuser"));
+    		System.out.println(prop.getProperty("dbpassword"));
+    		System.out.println(prop.getProperty("options"));*/
+
+    	} catch (IOException ex) {
+    		ex.printStackTrace();
+    	} finally {
+    		if (input != null) {
+    			try {
+    				input.close();
+    			} catch (IOException e) {
+    				e.printStackTrace();
+    			}
+    		}
+    	}
+
+    	
+        String url= "jdbc:mysql://" + prop.getProperty("server") + ":3306/";
+        String driver = prop.getProperty("driver");
+        String dbName = prop.getProperty("database");
+        String userName = prop.getProperty("dbuser");
+        String password = prop.getProperty("dbpassword");
+        String options = prop.getProperty("options");
         String connection = url+dbName+"?"+options;
         try {
             Class.forName(driver).newInstance();
