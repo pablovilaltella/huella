@@ -1,0 +1,6 @@
+server=localhost
+driver=com.mysql.jdbc.Driver
+database=base
+dbuser=usuario
+dbpassword=password
+options=autoReconnect=true&useSSL=true;
