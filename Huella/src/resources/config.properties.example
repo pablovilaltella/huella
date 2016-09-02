@@ -3,4 +3,4 @@ driver=com.mysql.jdbc.Driver
 database=base
 dbuser=usuario
 dbpassword=password
-options=autoReconnect=true&useSSL=true;
+options=autoReconnect=true&useSSL=true
