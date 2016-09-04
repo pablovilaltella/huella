@@ -19,7 +19,11 @@ import java.util.*;
 public class VerificationDialog
 	extends JDialog
 {
-    private EnumMap<DPFPFingerIndex, DPFPTemplate> templates;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private EnumMap<DPFPFingerIndex, DPFPTemplate> templates;
     private int farRequested;
     private int farAchieved;
     private DPFPVerificationControl verificationControl;
