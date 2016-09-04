@@ -1,12 +1,11 @@
 package db;
 
-import com.digitalpersona.onetouch.DPFPTemplate;
 import com.mysql.jdbc.Connection;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
+import java.nio.channels.SeekableByteChannel;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -110,6 +109,7 @@ public final class MysqlConnect {
         return result;
  
     }
+    
     /**
      * Devuelve el usuario 
      * @param user String
@@ -153,6 +153,7 @@ public final class MysqlConnect {
 		}
     	return correcto;
     }
+    
     
     public void saveUser() throws NoSuchAlgorithmException, InvalidKeySpecException
     {
@@ -260,9 +261,9 @@ public final class MysqlConnect {
     
     
     public boolean saveFinger(byte[] dedo, String indiceDedo){
-    	/*TODO VER COMO SE GUARDA EL DEDO*/
+
     	try {
-    		// the mysql insert statement
+    		  // the mysql insert statement
     	      String query = " insert into huellas (id_persona, huella, nro_dedo)"
     	        + " values (?, ?, ?)";
 
@@ -286,5 +287,96 @@ public final class MysqlConnect {
 		}
     	return true;
     }
+    
+   /**
+    * Devuelvo todos los tipos de documentos
+    * @return ResultSet 
+    */
+	public ResultSet getTipoDocumentos() {
+		
+		String query ="Select id_tipo_documento, descripcion, codigo from tipo_documento";    	
+    	
+    	ResultSet res = null;
+		try {
+			res = this.query(query);
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return res;	
+	}
+	
+	/**
+	* Devuelvo verdadero si existe la persona
+	* @return boolean 
+	*/
+	public boolean existePersona() {
+		// TODO Auto-generated method stub
+		return false;		
+	}
+	
+	public ResultSet getIndiceTipoDocumento(String nombre){
+		
+		String query ="Select id_tipo_documento from tipo_documento where codigo = '" + nombre + "'";    	
+    	
+    	ResultSet resultado = null;
+		try {
+			resultado = this.query(query);
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+	
+	/**
+	* Guardo la persona
+	* @return boolean 
+	*/
+	public void guardarPersona(String apellido, String nombre, String profesion, String selectedItem, String nro) {
+		// TODO Auto-generated method stub
+		try {
+		
+			// Inserto la persona
+			String query = " insert into persona (nombre, apellido, profesion)"
+	        + " values (?, ?, ?)";
+			
+			// create the mysql insert preparedstatement
+			PreparedStatement preparedStmt = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+
+			preparedStmt.setString(1, nombre);
+			preparedStmt.setString(2, apellido);
+			preparedStmt.setString(3, profesion);
+	
+			// execute the preparedstatement
+			preparedStmt.execute();
+			
+			ResultSet key = preparedStmt.getGeneratedKeys();
+
+			key.next();
+			System.out.println(key.getInt(1));
+			System.out.println(selectedItem);
+			ResultSet clave = getIndiceTipoDocumento(selectedItem);
+			clave.next();
+			// Inserto el DNI
+			
+			String queryDoc = " insert into persona_documento (id_persona, id_tipo_documento, numero)"
+			        + " values (?, ?, ?)";
+					
+			// create the mysql insert preparedstatement
+			PreparedStatement preparedStmtDoc = conn.prepareStatement(queryDoc);
+
+			preparedStmtDoc.setInt(1, key.getInt(1));
+			preparedStmtDoc.setInt(2, clave.getInt(1));
+			preparedStmtDoc.setString(3, nro);
+			
+			// execute the preparedstatement
+			preparedStmtDoc.execute();
+
+
+	} catch (SQLException e) {
+
+		e.printStackTrace();
+	}
+
+	}
     
 }
