@@ -17,6 +17,9 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.border.BevelBorder;
+
+import persona.PersonaABM;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -50,6 +53,7 @@ public class MainMenu extends JFrame {
 	 */
 	public MainMenu() {
 		
+		super("Sistema de Control de ingreso");
 		setState(Frame.NORMAL);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -64,7 +68,15 @@ public class MainMenu extends JFrame {
 		menuBar.add(mnInicio);
 		
 		JMenuItem mntmNewMenuItem = new JMenuItem("Nueva Persona");
-		mnInicio.add(mntmNewMenuItem);
+		
+		ActionListener nuevaPersona = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                //JOptionPane.showMessageDialog(null,"Presionaste el JMenuItem Acerca de");
+            	new PersonaABM();
+            }   
+        };
+        mntmNewMenuItem.addActionListener(nuevaPersona);        
+        mnInicio.add(mntmNewMenuItem);
 		
 		JMenu mnReportes = new JMenu("Reportes");
 		menuBar.add(mnReportes);
