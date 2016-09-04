@@ -2,12 +2,8 @@ package com.digitalpersona.onetouch.ui.swing.sample.UISupport;
 
 import com.digitalpersona.onetouch.*;
 import com.digitalpersona.onetouch.ui.swing.*;
-
 import db.MysqlConnect;
-
-import javax.net.ssl.SSLEngineResult.Status;
 import javax.swing.*;
-
 import java.awt.*;
 import java.awt.event.*;
 import java.util.*;
@@ -18,7 +14,11 @@ import java.util.*;
 public class EnrollmentDialog
 	extends JDialog
 {
-    private EnumMap<DPFPFingerIndex, DPFPTemplate> templates;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private EnumMap<DPFPFingerIndex, DPFPTemplate> templates;
 
     public EnrollmentDialog(Frame owner, int maxCount, final String reasonToFail, EnumMap<DPFPFingerIndex, DPFPTemplate> templates) {
         super (owner, true);
