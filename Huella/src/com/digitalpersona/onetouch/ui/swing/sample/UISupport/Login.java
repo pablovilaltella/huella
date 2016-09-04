@@ -8,26 +8,21 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
-import javax.swing.SwingConstants;
 import javax.swing.WindowConstants;
-import javax.swing.border.LineBorder;
-
 import db.MysqlConnect;
 
-import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
-import java.awt.Dialog.ModalExclusionType;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.security.NoSuchAlgorithmException;
-import java.security.spec.InvalidKeySpecException;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.awt.Font;
 
 public class Login extends JDialog {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldUser;
 	private JTextField textFieldPass;
@@ -116,7 +111,7 @@ public class Login extends JDialog {
 						boolean result = conection.validateUser(textFieldUser.getText(),textFieldPass.getText());
 						if (result){
 							// Llamada al MAINFORM
-							 new MainForm();
+							 new MainMenu();
 							 setVisible(false);								
 						}else{
 							lblError.setVisible(true);

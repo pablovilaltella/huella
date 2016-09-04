@@ -18,7 +18,11 @@ import java.util.*;
 public class MainForm
 	extends JFrame
 {
-    private EnumMap<DPFPFingerIndex, DPFPTemplate> templates = new EnumMap<DPFPFingerIndex, DPFPTemplate>(DPFPFingerIndex.class);
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private EnumMap<DPFPFingerIndex, DPFPTemplate> templates = new EnumMap<DPFPFingerIndex, DPFPTemplate>(DPFPFingerIndex.class);
     private EnumMap<DPFPFingerIndex, JCheckBox> checkBoxes = new EnumMap<DPFPFingerIndex, JCheckBox>(DPFPFingerIndex.class);
 
     private static final DPFPTemplate fakeTemplate;
@@ -43,10 +47,10 @@ public class MainForm
     }
 
     public MainForm() {
-    	super("Java UI Sample");
+    	super("Enrolar huella");
 
     	setState(Frame.NORMAL);
-    	setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+//    	setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     	setResizable(false);    	
 
     	//// Enrollment Panel
