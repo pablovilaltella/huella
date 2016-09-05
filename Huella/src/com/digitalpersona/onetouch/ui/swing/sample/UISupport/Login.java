@@ -48,7 +48,7 @@ public class Login extends JDialog {
 		setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		setResizable(false);
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
-		setBounds(100, 100, 280, 180);
+		setBounds(100, 100, 280, 165);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -56,23 +56,23 @@ public class Login extends JDialog {
 		contentPanel.setLayout(null);
 		{
 			JLabel lblUser = new JLabel("Usuario:");
-			lblUser.setBounds(33, 24, 55, 20);
+			lblUser.setBounds(12, 24, 70, 20);
 			contentPanel.add(lblUser);
 		}
 		{
 			textFieldUser = new JTextField();
-			textFieldUser.setBounds(95, 24, 130, 20);
+			textFieldUser.setBounds(111, 24, 130, 20);
 			contentPanel.add(textFieldUser);
 			textFieldUser.setColumns(10);
 		}
 		{
 			JLabel lblPass = new JLabel("Clave:");
-			lblPass.setBounds(33, 61, 55, 20);
+			lblPass.setBounds(12, 61, 70, 20);
 			contentPanel.add(lblPass);
 		}
 		{
 			textFieldPass = new JPasswordField();
-			textFieldPass.setBounds(95, 61, 130, 20);
+			textFieldPass.setBounds(111, 61, 130, 20);
 			contentPanel.add(textFieldPass);
 			textFieldPass.setColumns(10);
 		}
@@ -81,7 +81,7 @@ public class Login extends JDialog {
 		lblError.setText("<html> <font color='red'> Error de usuario y/o clave </font></html>");
 		lblError.setVisible(false);
 		lblError.setFont(new Font("Tahoma", Font.BOLD, 11));
-		lblError.setBounds(60, 92, 154, 20);
+		lblError.setBounds(40, 92, 174, 25);
 		contentPanel.add(lblError);
 		{
 			JPanel buttonPane = new JPanel();

@@ -47,39 +47,39 @@ public class PersonaABM extends JFrame{
 		conection = MysqlConnect.getDbCon();
 		
 		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(22, 22, 50, 20);
+		lblApellido.setBounds(22, 34, 100, 20);
 		getContentPane().add(lblApellido);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(22, 53, 50, 20);
+		lblNombre.setBounds(22, 65, 100, 20);
 		getContentPane().add(lblNombre);
 		
 		JLabel lblTipoDoc = new JLabel("Tipo Documento:");
-		lblTipoDoc.setBounds(22, 84, 100, 20);
+		lblTipoDoc.setBounds(22, 96, 120, 20);
 		getContentPane().add(lblTipoDoc);
 		
 		JLabel lblNumero = new JLabel("N\u00FAmero:");
-		lblNumero.setBounds(22, 115, 50, 20);
+		lblNumero.setBounds(22, 127, 100, 20);
 		getContentPane().add(lblNumero);
 		
 		JComboBox cbTipoDoc = new JComboBox();
-		cbTipoDoc.setBounds(116, 84, 128, 20);
+		cbTipoDoc.setBounds(162, 96, 128, 20);
 		this.cargarCombo(cbTipoDoc);
 		getContentPane().add(cbTipoDoc);
 		
 		textFieldApellido = new JTextField();
-		textFieldApellido.setBounds(116, 22, 128, 20);
+		textFieldApellido.setBounds(162, 34, 128, 20);
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(116, 53, 128, 20);
+		textFieldNombre.setBounds(162, 65, 128, 20);
 		getContentPane().add(textFieldNombre);
 		
 		JTextField textFieldNro = new JTextField();
 		textFieldNro.setColumns(10);
-		textFieldNro.setBounds(116, 115, 128, 20);
+		textFieldNro.setBounds(162, 127, 128, 20);
 		getContentPane().add(textFieldNro);
 		
 		JButton btnGuardar = new JButton("Guardar");
@@ -94,20 +94,20 @@ public class PersonaABM extends JFrame{
 				
 			}
 		});
-		btnGuardar.setBounds(22, 197, 89, 23);
+		btnGuardar.setBounds(46, 209, 100, 23);
 		getContentPane().add(btnGuardar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(143, 197, 89, 23);
+		btnCancelar.setBounds(167, 209, 100, 23);
 		getContentPane().add(btnCancelar);
 		
 		JLabel lblProfesion = new JLabel("Profesi\u00F3n:");
-		lblProfesion.setBounds(22, 154, 50, 20);
+		lblProfesion.setBounds(22, 166, 100, 20);
 		getContentPane().add(lblProfesion);
 		
 		textFieldProfesion = new JTextField();
 		textFieldProfesion.setColumns(10);
-		textFieldProfesion.setBounds(116, 154, 128, 20);
+		textFieldProfesion.setBounds(162, 166, 128, 20);
 		getContentPane().add(textFieldProfesion);
 		setVisible(true);
 	}
