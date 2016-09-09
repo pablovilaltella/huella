@@ -10,6 +10,8 @@ import db.MysqlConnect;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -33,7 +35,7 @@ public class PersonaABM extends JFrame{
 	private String errorApellido = "El apellido es obligatorio";
 	private String errorNombre = "El mombre es obligatorio";
 	private String errorTipo = "El tipo de documento es obligatorio";
-	private String errorNro = "El nÃºmero de documento es obligatorio";
+	private String errorNro = "El número de documento es obligatorio";
 	
 	
 	/**
@@ -47,7 +49,7 @@ public class PersonaABM extends JFrame{
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
 		
-		setBounds(100, 100, 500, 450);
+		setBounds(100, 100, 350, 330);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
@@ -55,39 +57,39 @@ public class PersonaABM extends JFrame{
 		conection = MysqlConnect.getDbCon();
 		
 		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(46, 32, 100, 20);
+		lblApellido.setBounds(36, 28, 100, 20);
 		getContentPane().add(lblApellido);
 		
 		JLabel lblNombre = new JLabel("Nombre:");
-		lblNombre.setBounds(46, 63, 100, 20);
+		lblNombre.setBounds(36, 59, 100, 20);
 		getContentPane().add(lblNombre);
 		
 		JLabel lblTipoDoc = new JLabel("Tipo Documento:");
-		lblTipoDoc.setBounds(46, 94, 120, 20);
+		lblTipoDoc.setBounds(36, 90, 120, 20);
 		getContentPane().add(lblTipoDoc);
 		
 		JLabel lblNumero = new JLabel("N\u00FAmero:");
-		lblNumero.setBounds(46, 125, 100, 20);
+		lblNumero.setBounds(36, 121, 100, 20);
 		getContentPane().add(lblNumero);
 		
 		cbTipoDoc = new JComboBox<String>();
-		cbTipoDoc.setBounds(186, 94, 128, 20);
+		cbTipoDoc.setBounds(176, 90, 128, 20);
 		this.cargarCombo();
 		getContentPane().add(cbTipoDoc);
 		
 		textFieldApellido = new JTextField();
-		textFieldApellido.setBounds(186, 32, 128, 20);
+		textFieldApellido.setBounds(176, 28, 128, 20);
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(186, 63, 128, 20);
+		textFieldNombre.setBounds(176, 59, 128, 20);
 		getContentPane().add(textFieldNombre);
 		
 		textFieldNro = new JTextField();
 		textFieldNro.setColumns(10);
-		textFieldNro.setBounds(186, 125, 128, 20);
+		textFieldNro.setBounds(176, 121, 128, 20);
 		getContentPane().add(textFieldNro);
 		
 		JButton btnGuardar = new JButton("Guardar");
@@ -105,24 +107,29 @@ public class PersonaABM extends JFrame{
 				
 			}
 		});
-		btnGuardar.setBounds(73, 243, 100, 23);
+		btnGuardar.setBounds(63, 239, 100, 23);
 		getContentPane().add(btnGuardar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(194, 243, 100, 23);
+		btnCancelar.setBounds(184, 239, 100, 23);
 		getContentPane().add(btnCancelar);
+		btnCancelar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				dispose();           //End Dialog
+			}
+		});
 		
 		JLabel lblProfesion = new JLabel("Profesi\u00F3n:");
-		lblProfesion.setBounds(46, 164, 100, 20);
+		lblProfesion.setBounds(36, 160, 100, 20);
 		getContentPane().add(lblProfesion);
 		
 		textFieldProfesion = new JTextField();
 		textFieldProfesion.setColumns(10);
-		textFieldProfesion.setBounds(186, 164, 128, 20);
+		textFieldProfesion.setBounds(176, 160, 128, 20);
 		getContentPane().add(textFieldProfesion);
 		
-		lblError = new JLabel("");
-		lblError.setBounds(30, 196, 300, 20);
+		lblError = new JLabel("",SwingConstants.CENTER);
+		lblError.setBounds(23, 202, 300, 20);
 		getContentPane().add(lblError);
 		lblError.setVisible(false);
 		setVisible(true);
@@ -141,21 +148,22 @@ public class PersonaABM extends JFrame{
 	}
 	
 	private boolean hayVacios(){
+		//TODO: Alinear el texto 
 		boolean resultado = false;
 		if (textFieldApellido.getText().length() == 0){
-			lblError.setText(errorApellido);
+			lblError.setText("<html> <font color='red'> " + errorApellido + " </font></html>");
 			lblError.setVisible(true);
 			resultado = true;
 		}else if (textFieldNombre.getText().length() == 0){
-			lblError.setText(errorNombre);
+			lblError.setText("<html> <font color='red'> " + errorNombre + " </font></html>");
 			lblError.setVisible(true);
 			resultado = true;
 		}else if (cbTipoDoc.getSelectedItem().toString().isEmpty()){
-			lblError.setText(errorTipo);
+			lblError.setText("<html> <font color='red'> " + errorTipo + " </font></html>");
 			lblError.setVisible(true);
 			resultado = true;
 		}else if (textFieldNro.getText().length() == 0){
-			lblError.setText(errorNro);
+			lblError.setText("<html> <font color='red'> " + errorNro + " </font></html>");
 			lblError.setVisible(true);
 			resultado = true;
 		}
