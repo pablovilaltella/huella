@@ -16,13 +16,13 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
-import javax.swing.border.BevelBorder;
 
 import persona.PersonaABM;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class MainMenu extends JFrame {
 
@@ -54,6 +54,7 @@ public class MainMenu extends JFrame {
 	public MainMenu() {
 		
 		super("Sistema de Control de ingreso");
+		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Pablo\\git\\huella\\Huella\\dist\\huellaBinario.png"));
 		setState(Frame.NORMAL);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
@@ -86,10 +87,9 @@ public class MainMenu extends JFrame {
 		getContentPane().setLayout(null);
 		
 		JPanel panel = new JPanel();
-		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		getContentPane().add(panel);
 		panel.setLayout(null);
-		panel.setBounds(0, 369, 484, 22);
+		panel.setBounds(2, 372, 490, 24);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
 		lblUsuario.setBounds(10, 4, 150, 14);
