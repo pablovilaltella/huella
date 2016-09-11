@@ -8,6 +8,7 @@ import javax.swing.WindowConstants;
 import db.MysqlConnect;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
@@ -97,8 +98,8 @@ public class PersonaABM extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				
 				if (!hayVacios()){					
-					if (conection.existePersona()){
-						System.out.println("Existe la persona ");
+					if (conection.existePersona(textFieldNro.getText(),cbTipoDoc.getSelectedItem().toString())){						
+						JOptionPane.showMessageDialog(getContentPane(),"Existe el tipo y número de documento.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else{
 						conection.guardarPersona(textFieldApellido.getText(),textFieldNombre.getText(), textFieldProfesion.getText(), cbTipoDoc.getSelectedItem().toString(), textFieldNro.getText());

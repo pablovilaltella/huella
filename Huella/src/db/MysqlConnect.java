@@ -309,9 +309,25 @@ public final class MysqlConnect {
 	* Devuelvo verdadero si existe la persona
 	* @return boolean 
 	*/
-	public boolean existePersona() {
-		// TODO Auto-generated method stub
-		return false;		
+	public boolean existePersona(String numeroDoc, String tipoDoc) {
+		
+		boolean existe = false;
+
+		try {
+			ResultSet idTipo = getIndiceTipoDocumento(tipoDoc);
+			idTipo.next();
+			String query ="Select id_persona id_tipo_documento from persona_documento where numero = '" + numeroDoc + "' and id_tipo_documento = '" + idTipo.getInt(1) + "'";    	
+			
+			ResultSet resultado = null;
+			resultado = this.query(query);
+			if (resultado.next()){
+				existe = true;								
+			}
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		
+		return existe;		
 	}
 	
 	public ResultSet getIndiceTipoDocumento(String nombre){
