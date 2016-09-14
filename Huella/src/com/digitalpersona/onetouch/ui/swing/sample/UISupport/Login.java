@@ -26,6 +26,7 @@ public class Login extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private JTextField textFieldUser;
 	private JTextField textFieldPass;
+	public static String usuarioConectado;
 
 	/**
 	 * Launch the application.
@@ -95,24 +96,22 @@ public class Login extends JDialog {
 				getRootPane().setDefaultButton(okButton);
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						//setVisible(false);
-						// TODO: LOGUEAR
 						
 						MysqlConnect conection = MysqlConnect.getDbCon();
 						/*try {
 							conection.saveUser(); // UNICA VEZ
-						} catch (NoSuchAlgorithmException e1) {
-							// TODO Auto-generated catch block
+						} catch (NoSuchAlgorithmException e1) {							
 							e1.printStackTrace();
 						} catch (InvalidKeySpecException e1) {
-							// TODO Auto-generated catch block
 							e1.printStackTrace();
 						}*/
 						boolean result = conection.validateUser(textFieldUser.getText(),textFieldPass.getText());
 						if (result){
 							// Llamada al MAINFORM
-							 new MainMenu();
-							 setVisible(false);								
+							usuarioConectado = textFieldUser.getText();
+							MainMenu menu = new MainMenu();
+							menu.setUsuarioConectado(usuarioConectado);
+							setVisible(false);								
 						}else{
 							lblError.setVisible(true);
 							}

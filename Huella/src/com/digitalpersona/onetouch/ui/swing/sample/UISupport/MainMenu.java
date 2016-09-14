@@ -30,6 +30,12 @@ public class MainMenu extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JLabel lblUsuarioConectado;
+
+
+	public void setUsuarioConectado(String lblUsuarioConectado) {
+		this.lblUsuarioConectado.setText(lblUsuarioConectado);
+	}
 
 	/**
 	 * Launch the application.
@@ -92,8 +98,12 @@ public class MainMenu extends JFrame {
 		panel.setBounds(2, 372, 490, 24);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(10, 4, 150, 14);
+		lblUsuario.setBounds(10, 4, 150, 15);
 		panel.add(lblUsuario);
+		
+		lblUsuarioConectado = new JLabel();		
+		lblUsuarioConectado.setBounds(176, 4, 150, 15);
+		panel.add(lblUsuarioConectado);
 		
 		JButton btnEnrolar = new JButton("Enrolar");
 		btnEnrolar.addActionListener(new ActionListener() {
