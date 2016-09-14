@@ -3,7 +3,6 @@ package persona;
 import java.awt.Frame;
 
 import javax.swing.JFrame;
-import javax.swing.WindowConstants;
 
 import db.MysqlConnect;
 
@@ -36,7 +35,7 @@ public class PersonaABM extends JFrame{
 	private String errorApellido = "El apellido es obligatorio";
 	private String errorNombre = "El mombre es obligatorio";
 	private String errorTipo = "El tipo de documento es obligatorio";
-	private String errorNro = "El número de documento es obligatorio";
+	private String errorNro = "El nï¿½mero de documento es obligatorio";
 	
 	
 	/**
@@ -47,7 +46,6 @@ public class PersonaABM extends JFrame{
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Pablo\\git\\huella\\Huella\\dist\\person_icon.png"));
 		
 		setState(Frame.NORMAL);
-		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);
 		
 		setBounds(100, 100, 350, 330);
@@ -99,7 +97,7 @@ public class PersonaABM extends JFrame{
 				
 				if (!hayVacios()){					
 					if (conection.existePersona(textFieldNro.getText(),cbTipoDoc.getSelectedItem().toString())){						
-						JOptionPane.showMessageDialog(getContentPane(),"Existe el tipo y número de documento.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(getContentPane(),"Existe el tipo y nï¿½mero de documento.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else{
 						conection.guardarPersona(textFieldApellido.getText(),textFieldNombre.getText(), textFieldProfesion.getText(), cbTipoDoc.getSelectedItem().toString(), textFieldNro.getText());
