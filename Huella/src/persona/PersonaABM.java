@@ -35,7 +35,7 @@ public class PersonaABM extends JFrame{
 	private String errorApellido = "El apellido es obligatorio";
 	private String errorNombre = "El mombre es obligatorio";
 	private String errorTipo = "El tipo de documento es obligatorio";
-	private String errorNro = "El n�mero de documento es obligatorio";
+	private String errorNro = "El número de documento es obligatorio";
 	
 	
 	/**
@@ -97,10 +97,12 @@ public class PersonaABM extends JFrame{
 				
 				if (!hayVacios()){					
 					if (conection.existePersona(textFieldNro.getText(),cbTipoDoc.getSelectedItem().toString())){						
-						JOptionPane.showMessageDialog(getContentPane(),"Existe el tipo y n�mero de documento.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(getContentPane(),"Existe el tipo y número de documento.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else{
 						conection.guardarPersona(textFieldApellido.getText(),textFieldNombre.getText(), textFieldProfesion.getText(), cbTipoDoc.getSelectedItem().toString(), textFieldNro.getText());
+						JOptionPane.showMessageDialog(getContentPane(),"Persona registrada","Persona guardada",JOptionPane.INFORMATION_MESSAGE);
+						dispose();
 					}
 				}
 				
