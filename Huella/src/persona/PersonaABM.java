@@ -12,6 +12,8 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
+import com.digitalpersona.onetouch.ui.swing.sample.UISupport.MainForm;
+
 import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -100,8 +102,10 @@ public class PersonaABM extends JFrame{
 						JOptionPane.showMessageDialog(getContentPane(),"Existe el tipo y número de documento.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else{
-						conection.guardarPersona(textFieldApellido.getText(),textFieldNombre.getText(), textFieldProfesion.getText(), cbTipoDoc.getSelectedItem().toString(), textFieldNro.getText());
+						int idPersona = conection.guardarPersona(textFieldApellido.getText(),textFieldNombre.getText(), textFieldProfesion.getText(), cbTipoDoc.getSelectedItem().toString(), textFieldNro.getText());
 						JOptionPane.showMessageDialog(getContentPane(),"Persona registrada","Persona guardada",JOptionPane.INFORMATION_MESSAGE);
+						MainForm formulario = new MainForm();
+						formulario.setIdPersonaAEnrolar(idPersona);
 						dispose();
 					}
 				}
