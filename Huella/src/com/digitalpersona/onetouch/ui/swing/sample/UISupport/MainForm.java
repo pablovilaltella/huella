@@ -36,6 +36,7 @@ public class MainForm
     private JSpinner farRequestedSpinner;
     private JTextField farAchieved;
     JCheckBox fingerMatched;
+    private int idPersonaAEnrolar;
 
     static {
         fakeTemplate = DPFPGlobal.getTemplateFactory().createTemplate();
@@ -45,10 +46,9 @@ public class MainForm
             e.printStackTrace();
         }
     }
-
+    
     public MainForm() {
     	super("Enrolar huella");
-
     	setState(Frame.NORMAL);
 //    	setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     	setResizable(false);    	
@@ -126,6 +126,7 @@ public class MainForm
             public void actionPerformed(ActionEvent e) {
            		new EnrollmentDialog(MainForm.this,
            				maxCount.getNumber().intValue(),
+           				idPersonaAEnrolar,
            				enforceFailure.isSelected() ? "Just because I'm not in a mood." : null,
            				templates
            			).setVisible(true);
@@ -265,5 +266,13 @@ public class MainForm
             }
         });
     }
+
+	public int getIdPersonaAEnrolar() {
+		return idPersonaAEnrolar;
+	}
+
+	public void setIdPersonaAEnrolar(int idPersonaAEnrolar) {
+		this.idPersonaAEnrolar = idPersonaAEnrolar;
+	}
 
 }
