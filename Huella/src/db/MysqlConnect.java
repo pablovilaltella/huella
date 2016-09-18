@@ -5,7 +5,6 @@ import com.mysql.jdbc.Connection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.math.BigInteger;
-import java.nio.channels.SeekableByteChannel;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
@@ -260,15 +259,13 @@ public final class MysqlConnect {
     }
     
     
-    public boolean saveFinger(byte[] dedo, String indiceDedo){
+    public boolean saveFinger(int idPersona, byte[] dedo, String indiceDedo){
 
     	try {
     		  // the mysql insert statement
     	      String query = " insert into huellas (id_persona, huella, nro_dedo)"
     	        + " values (?, ?, ?)";
 
-    	      Integer idPersona = 1; // Id Persona    	      
-    	          	      
     	      // create the mysql insert preparedstatement
     	      PreparedStatement preparedStmt = conn.prepareStatement(query);
     	          	      
@@ -345,10 +342,10 @@ public final class MysqlConnect {
 	
 	/**
 	* Guardo la persona
-	* @return boolean 
+	* @return idPersona 
 	*/
-	public void guardarPersona(String apellido, String nombre, String profesion, String selectedItem, String nro) {
-		// TODO Auto-generated method stub
+	public int guardarPersona(String apellido, String nombre, String profesion, String selectedItem, String nro) {
+		int result = 0;
 		try {
 		
 			// Inserto la persona
@@ -386,13 +383,14 @@ public final class MysqlConnect {
 			
 			// execute the preparedstatement
 			preparedStmtDoc.execute();
-
+			result = key.getInt(1);
 
 	} catch (SQLException e) {
 
 		e.printStackTrace();
 	}
-
+		return result;
+		
 	}
     
 }
