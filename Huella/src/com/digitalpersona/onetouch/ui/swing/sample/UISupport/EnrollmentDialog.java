@@ -20,7 +20,7 @@ public class EnrollmentDialog
 	private static final long serialVersionUID = 1L;
 	private EnumMap<DPFPFingerIndex, DPFPTemplate> templates;
 
-    public EnrollmentDialog(Frame owner, int maxCount, final String reasonToFail, EnumMap<DPFPFingerIndex, DPFPTemplate> templates) {
+    public EnrollmentDialog(Frame owner, int maxCount, int idPersona , final String reasonToFail, EnumMap<DPFPFingerIndex, DPFPTemplate> templates) {
         super (owner, true);
         this.templates = templates;
 
@@ -62,7 +62,7 @@ public class EnrollmentDialog
                     	dedoSerialized = dedo.serialize();                       
                     }
                     MysqlConnect conection = MysqlConnect.getDbCon();
-                    conection.saveFinger(dedoSerialized, indiceDedo.toString());                    
+                    conection.saveFinger(idPersona, dedoSerialized, indiceDedo.toString());                    
                 }                
             }
             
