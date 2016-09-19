@@ -344,16 +344,16 @@ public final class MysqlConnect {
 	* Guardo la persona
 	* @return idPersona 
 	*/
-	public int guardarPersona(String apellido, String nombre, String profesion, String selectedItem, String nro) {
+	public int guardarPersona(String apellido, String nombre, String profesion, String selectedItem, String nro, String calle, String nroDire, String dpto, String piso) {
 		int result = 0;
 		try {
-		
+			conn.setAutoCommit(false);
 			// Inserto la persona
-			String query = " insert into persona (nombre, apellido, profesion)"
+			String queryPersona = " insert into persona (nombre, apellido, profesion)"
 	        + " values (?, ?, ?)";
 			
 			// create the mysql insert preparedstatement
-			PreparedStatement preparedStmt = conn.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
+			PreparedStatement preparedStmt = conn.prepareStatement(queryPersona,Statement.RETURN_GENERATED_KEYS);
 
 			preparedStmt.setString(1, nombre);
 			preparedStmt.setString(2, apellido);
@@ -369,8 +369,8 @@ public final class MysqlConnect {
 			System.out.println(selectedItem);
 			ResultSet clave = getIndiceTipoDocumento(selectedItem);
 			clave.next();
-			// Inserto el DNI
 			
+			// Inserto el DNI			
 			String queryDoc = " insert into persona_documento (id_persona, id_tipo_documento, numero)"
 			        + " values (?, ?, ?)";
 					
@@ -383,6 +383,25 @@ public final class MysqlConnect {
 			
 			// execute the preparedstatement
 			preparedStmtDoc.execute();
+			
+			// Inserto la direccion
+			String queryDireccion = " insert into direccion (id_persona, calle, numero, dpto, piso)"
+			        + " values (?, ?, ?, ? ,?)";
+					
+			// create the mysql insert preparedstatement
+			PreparedStatement preparedStmtDireccion = conn.prepareStatement(queryDireccion);
+
+			preparedStmtDireccion.setInt(1, key.getInt(1));
+			preparedStmtDireccion.setString(2, calle);
+			preparedStmtDireccion.setInt(3, Integer.parseInt(nroDire));
+			preparedStmtDireccion.setString(4, dpto);
+			preparedStmtDireccion.setString(5, piso);
+			
+			// execute the preparedstatement
+			preparedStmtDireccion.execute();
+
+			conn.commit();
+			conn.setAutoCommit(true);
 			result = key.getInt(1);
 
 	} catch (SQLException e) {
