@@ -37,7 +37,13 @@ public class PersonaABM extends JFrame{
 	private String errorApellido = "El apellido es obligatorio";
 	private String errorNombre = "El mombre es obligatorio";
 	private String errorTipo = "El tipo de documento es obligatorio";
-	private String errorNro = "El nÃºmero de documento es obligatorio";
+	private String errorNro = "El número de documento es obligatorio";
+	private String errorNroDire = "El número en domicilio es obligatorio";
+	private String errorCalle = "La calle es obligatoria";
+	private JTextField textFieldCalle;
+	private JTextField textFieldNroDire;
+	private JTextField textFieldPiso;
+	private JTextField textFieldDpto;
 	
 	
 	/**
@@ -50,7 +56,7 @@ public class PersonaABM extends JFrame{
 		setState(Frame.NORMAL);
 		setResizable(false);
 		
-		setBounds(100, 100, 350, 330);
+		setBounds(100, 100, 350, 400);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
 		
@@ -99,10 +105,10 @@ public class PersonaABM extends JFrame{
 				
 				if (!hayVacios()){					
 					if (conection.existePersona(textFieldNro.getText(),cbTipoDoc.getSelectedItem().toString())){						
-						JOptionPane.showMessageDialog(getContentPane(),"Existe el tipo y nÃºmero de documento.","Error",JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(getContentPane(),"Existe el tipo y número de documento.","Error",JOptionPane.ERROR_MESSAGE);
 					}
 					else{
-						int idPersona = conection.guardarPersona(textFieldApellido.getText(),textFieldNombre.getText(), textFieldProfesion.getText(), cbTipoDoc.getSelectedItem().toString(), textFieldNro.getText());
+						int idPersona = conection.guardarPersona(textFieldApellido.getText(),textFieldNombre.getText(), textFieldProfesion.getText(), cbTipoDoc.getSelectedItem().toString(), textFieldNro.getText(),textFieldCalle.getText(),textFieldNroDire.getText(),textFieldDpto.getText(), textFieldPiso.getText());
 						JOptionPane.showMessageDialog(getContentPane(),"Persona registrada","Persona guardada",JOptionPane.INFORMATION_MESSAGE);
 						MainForm formulario = new MainForm();
 						formulario.setIdPersonaAEnrolar(idPersona);
@@ -112,11 +118,11 @@ public class PersonaABM extends JFrame{
 				
 			}
 		});
-		btnGuardar.setBounds(63, 239, 100, 23);
+		btnGuardar.setBounds(62, 320, 100, 23);
 		getContentPane().add(btnGuardar);
 		
 		JButton btnCancelar = new JButton("Cancelar");
-		btnCancelar.setBounds(184, 239, 100, 23);
+		btnCancelar.setBounds(183, 320, 100, 23);
 		getContentPane().add(btnCancelar);
 		btnCancelar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -125,17 +131,53 @@ public class PersonaABM extends JFrame{
 		});
 		
 		JLabel lblProfesion = new JLabel("Profesi\u00F3n:");
-		lblProfesion.setBounds(36, 160, 100, 20);
+		lblProfesion.setBounds(36, 152, 100, 20);
 		getContentPane().add(lblProfesion);
 		
 		textFieldProfesion = new JTextField();
 		textFieldProfesion.setColumns(10);
-		textFieldProfesion.setBounds(176, 160, 128, 20);
+		textFieldProfesion.setBounds(176, 152, 128, 20);
 		getContentPane().add(textFieldProfesion);
 		
 		lblError = new JLabel("",SwingConstants.CENTER);
-		lblError.setBounds(23, 202, 300, 20);
+		lblError.setBounds(22, 289, 300, 20);
 		getContentPane().add(lblError);
+		
+		JLabel lblCalle = new JLabel("Calle:");
+		lblCalle.setBounds(36, 200, 55, 20);
+		getContentPane().add(lblCalle);
+		
+		textFieldCalle = new JTextField();
+		textFieldCalle.setBounds(90, 200, 214, 20);
+		getContentPane().add(textFieldCalle);
+		textFieldCalle.setColumns(10);
+		
+		JLabel lblNro = new JLabel("N\u00FAmero:");
+		lblNro.setBounds(36, 233, 55, 16);
+		getContentPane().add(lblNro);
+		
+		textFieldNroDire = new JTextField();
+		textFieldNroDire.setBounds(90, 231, 86, 20);
+		getContentPane().add(textFieldNroDire);
+		textFieldNroDire.setColumns(10);
+		
+		JLabel lblNewLabel_1 = new JLabel("Piso:");
+		lblNewLabel_1.setBounds(193, 234, 35, 16);
+		getContentPane().add(lblNewLabel_1);
+		
+		textFieldPiso = new JTextField();
+		textFieldPiso.setBounds(227, 231, 77, 20);
+		getContentPane().add(textFieldPiso);
+		textFieldPiso.setColumns(10);
+		
+		JLabel lblDpto = new JLabel("Departamento:");
+		lblDpto.setBounds(36, 268, 90, 16);
+		getContentPane().add(lblDpto);
+		
+		textFieldDpto = new JTextField();
+		textFieldDpto.setBounds(123, 266, 70, 20);
+		getContentPane().add(textFieldDpto);
+		textFieldDpto.setColumns(10);
 		lblError.setVisible(false);
 		setVisible(true);
 	}
@@ -171,8 +213,15 @@ public class PersonaABM extends JFrame{
 			lblError.setText("<html> <font color='red'> " + errorNro + " </font></html>");
 			lblError.setVisible(true);
 			resultado = true;
+		}else if (textFieldCalle.getText().length() == 0){
+			lblError.setText("<html> <font color='red'> " + errorCalle + " </font></html>");
+			lblError.setVisible(true);
+			resultado = true;
+		}else if (textFieldNroDire.getText().length() == 0){
+			lblError.setText("<html> <font color='red'> " + errorNroDire + " </font></html>");
+			lblError.setVisible(true);
+			resultado = true;
 		}
-		
 		return resultado;
 	}
 }
