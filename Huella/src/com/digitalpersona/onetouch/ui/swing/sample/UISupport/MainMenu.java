@@ -108,15 +108,28 @@ public class MainMenu extends JFrame {
 		JButton btnEnrolar = new JButton("Enrolar");
 		btnEnrolar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				new MainForm();
+				new PersonaABM();
 			}
 		});
-		btnEnrolar.setBounds(89, 175, 89, 23);
+		btnEnrolar.setBounds(75, 110, 130, 49);
 		getContentPane().add(btnEnrolar);
 		
-		JButton btnVerificar = new JButton("Verificar");
-		btnVerificar.setBounds(306, 175, 89, 23);
-		getContentPane().add(btnVerificar);
+		JButton btnEgreso = new JButton("Egreso");
+		btnEgreso.setBounds(290, 245, 130, 49);
+		getContentPane().add(btnEgreso);
+		
+		JButton btnIngreso = new JButton("Ingreso");
+		btnIngreso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
+		btnIngreso.setBounds(290, 110, 130, 49);
+		getContentPane().add(btnIngreso);
+		
+		JButton btnBuscarPersona = new JButton("Buscar Persona");
+		btnBuscarPersona.setBounds(75, 245, 130, 49);
+		getContentPane().add(btnBuscarPersona);
 
 		setVisible(true);
 	}
