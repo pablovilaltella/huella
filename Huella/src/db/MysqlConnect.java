@@ -411,5 +411,29 @@ public final class MysqlConnect {
 		return result;
 		
 	}
-    
+	
+	public void guardarMovimiento(String tipoMovimiento, int idHuella){
+		try {
+			conn.setAutoCommit(false);
+			// Inserto la persona
+			String queryPersona = " insert into movimiento (id_huella, tipo, fecha)"
+	        + " values (?, ?, ?)";
+			
+			// create the mysql insert preparedstatement
+			PreparedStatement preparedStmt = conn.prepareStatement(queryPersona,Statement.RETURN_GENERATED_KEYS);
+
+			Date fechaEvento = (Date) new java.util.Date();
+			
+			preparedStmt.setInt(1, idHuella);
+			preparedStmt.setString(2, tipoMovimiento);
+			preparedStmt.setDate(3, fechaEvento);
+	
+			// execute the preparedstatement
+			preparedStmt.execute();
+
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+	}
 }
