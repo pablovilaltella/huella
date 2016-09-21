@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 import persona.PersonaABM;
+import persona.RegistroIngreso;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -121,7 +122,7 @@ public class MainMenu extends JFrame {
 		JButton btnIngreso = new JButton("Ingreso");
 		btnIngreso.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				
+				new RegistroIngreso();
 			}
 		});
 		btnIngreso.setBounds(290, 110, 130, 49);
