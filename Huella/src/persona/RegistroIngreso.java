@@ -6,8 +6,10 @@ import javax.swing.JFrame;
 
 import db.MysqlConnect;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JButton;
-import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class RegistroIngreso extends JFrame{
 	
@@ -15,6 +17,12 @@ public class RegistroIngreso extends JFrame{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private JLabel lblDatoApellido;
+	private JLabel lblDatoNombre;
+	private JLabel lblDatoTipoDoc;
+	private JLabel lblDatoNro;
+	private JLabel lblDatoProfesion;
+	private JLabel lblDatoId;
 
 	public RegistroIngreso (){
 		super("Registro de Ingreso");
@@ -25,6 +33,9 @@ public class RegistroIngreso extends JFrame{
 		setBounds(100, 100, 350, 330);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
+		
+		// traigo la conexion
+		MysqlConnect conection = MysqlConnect.getDbCon();
 		
 		JLabel lblApellido = new JLabel("Apellido:");
 		lblApellido.setBounds(25, 90, 100, 20);
@@ -46,37 +57,74 @@ public class RegistroIngreso extends JFrame{
 		lblProfesion.setBounds(25, 214, 100, 20);
 		getContentPane().add(lblProfesion);
 		
-		JLabel lblDatoApellido = new JLabel("");
+		lblDatoApellido = new JLabel("");
 		lblDatoApellido.setBounds(178, 90, 140, 20);
 		getContentPane().add(lblDatoApellido);
 		
-		JLabel lblDatoNombre = new JLabel("");
+		lblDatoNombre = new JLabel("");
 		lblDatoNombre.setBounds(178, 121, 140, 20);
 		getContentPane().add(lblDatoNombre);
 		
-		JLabel lblDatoTipoDoc = new JLabel("");
+		lblDatoTipoDoc = new JLabel("");
 		lblDatoTipoDoc.setBounds(178, 152, 140, 20);
 		getContentPane().add(lblDatoTipoDoc);
 		
-		JLabel lblDatoNro = new JLabel("");
+		lblDatoNro = new JLabel("");
 		lblDatoNro.setBounds(178, 183, 140, 20);
 		getContentPane().add(lblDatoNro);
 		
-		JLabel lblDatoProfesion = new JLabel("");
+		lblDatoProfesion = new JLabel("");
 		lblDatoProfesion.setBounds(178, 214, 140, 20);
 		getContentPane().add(lblDatoProfesion);
 		
 		JButton btnBuscarHuella = new JButton("Buscar Huella");
-		btnBuscarHuella.setBounds(122, 29, 100, 25);
+		btnBuscarHuella.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO: Buscar por la huella
+			}
+		});
+		btnBuscarHuella.setBounds(25, 30, 120, 25);
 		getContentPane().add(btnBuscarHuella);
 		
 		JButton btnNewButton = new JButton("Detalle Persona");
 		btnNewButton.setIcon(null);
-		btnNewButton.setBounds(112, 254, 120, 25);
+		btnNewButton.setBounds(102, 254, 140, 25);
 		getContentPane().add(btnNewButton);
 		
-		// traigo la conexion
-		MysqlConnect conection = MysqlConnect.getDbCon();
+		JButton btnGuardarIngreso = new JButton("Guardar Ingreso");
+		btnGuardarIngreso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				System.out.println(lblDatoApellido.getText());
+				if (existeHuella()){
+					//TODO: GUARDO EL INGRESO
+					System.out.println("GUARDO EL INGRESO");
+					
+				}
+				else{
+					JOptionPane.showMessageDialog(getContentPane(),"No se ha recuperado ninguna persona","Error",JOptionPane.ERROR_MESSAGE);
+				}
+			}
+		});
+		btnGuardarIngreso.setBounds(185, 30, 130, 25);
+		getContentPane().add(btnGuardarIngreso);
 		
+		JLabel lblId = new JLabel("Id:");
+		lblId.setBounds(25, 66, 54, 20);
+		getContentPane().add(lblId);
+		
+		lblDatoId = new JLabel("");
+		lblDatoId.setBounds(178, 69, 140, 20);
+		getContentPane().add(lblDatoId);
+		
+		setVisible(true);
+	}
+
+	protected boolean existeHuella() {
+		boolean retorno = false;
+		if (lblDatoId.getText() != ""){
+			retorno = true;
+		}
+		
+		return retorno;
 	}
 }
