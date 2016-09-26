@@ -7,8 +7,15 @@ import javax.swing.JFrame;
 import db.MysqlConnect;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+
+import com.digitalpersona.onetouch.ui.swing.sample.UISupport.MainForm;
+import com.digitalpersona.onetouch.ui.swing.sample.UISupport.VerificationDB;
+import com.digitalpersona.onetouch.ui.swing.sample.UISupport.VerificationDialog;
+
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.awt.event.ActionEvent;
 
 public class RegistroIngreso extends JFrame{
@@ -81,6 +88,24 @@ public class RegistroIngreso extends JFrame{
 		btnBuscarHuella.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO: Buscar por la huella
+				VerificationDB dlg = new VerificationDB(RegistroIngreso.this);
+				/*dlg.addPropertyChangeListener(new PropertyChangeListener()
+        		{
+        			public void propertyChange(final PropertyChangeEvent e) {
+        				String name = e.getPropertyName();
+        				if (VerificationDB.FAR_PROPERTY.equals(name)) {
+          			        //farAchieved.setText("" + (Integer)e.getNewValue());
+          			        
+        				} else
+        				if (VerificationDB.MATCHED_PROPERTY.equals(name)) {
+        					//fingerMatched.setSelected((Boolean)e.getNewValue());
+        					System.out.println("Correcto");
+        				}
+        			}
+        		});*/
+            	dlg.setVisible(true);
+            	//int x = dlg.getIdPersona();
+            	lblDatoId.setText(String.valueOf(dlg.getIdPersona()));
 			}
 		});
 		btnBuscarHuella.setBounds(25, 30, 120, 25);
