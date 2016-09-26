@@ -2,6 +2,9 @@ package com.digitalpersona.onetouch.ui.swing.sample.UISupport;
 
 import com.digitalpersona.onetouch.*;
 import com.digitalpersona.onetouch.verification.*;
+
+import db.MysqlConnect;
+
 import com.digitalpersona.onetouch.ui.swing.DPFPVerificationControl;
 import com.digitalpersona.onetouch.ui.swing.DPFPVerificationEvent;
 import com.digitalpersona.onetouch.ui.swing.DPFPVerificationListener;
@@ -11,6 +14,8 @@ import javax.swing.*;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -28,6 +33,7 @@ public class VerificationDialog
     private int farAchieved;
     private DPFPVerificationControl verificationControl;
     private boolean matched;
+    private MysqlConnect conection;
     
     static final String FAR_PROPERTY = "FAR";
     static final String MATCHED_PROPERTY = "Matched";
@@ -36,8 +42,8 @@ public class VerificationDialog
 		super(owner, true);
 		this.templates = templates;
 		this.farRequested = farRequested;
-
-		setTitle("Fingerprint Verification");
+		conection = MysqlConnect.getDbCon();
+		setTitle("Verificar Huella");
     	setResizable(false);    	
 
 		verificationControl = new DPFPVerificationControl();
@@ -50,11 +56,44 @@ public class VerificationDialog
 				e.setStopCapture(false);	// we want to continue capture until the dialog is closed
 				int bestFAR = DPFPVerification.PROBABILITY_ONE;
 				boolean hasMatch = false;
+				
+				/** TODO: Por la forma que esta hecho hay que traer todas las huellas e ir verificando
+				* y hacer el corte si la encuentra (VER SI HAY OTRA FORMA MAS EFECTIVA)
+				**/
+				/*
+				DPFPFeatureSet dedo = e.getFeatureSet();
+				dedo.deserialize(null);
+				// traigo la conexion
+				
+				ResultSet huellas = conection.getAllFingers();
+				
+				try {
+					while (huellas.next()) {
+						// Leo el bytte de la base
+						byte[] huellaByte = huellas.getBytes(3);
+						DPFPTemplate huellaTemplate = null;
+						// Lo deserializo
+						huellaTemplate.deserialize(huellaByte);
+						// uso el verify de la api
+						final DPFPVerificationResult result = verification.verify(e.getFeatureSet(), huellaTemplate);
+						e.setMatched(result.isVerified());		// report matching status
+						bestFAR = Math.min(bestFAR, result.getFalseAcceptRate());
+						if (e.getMatched()) {
+							System.out.println("Machea");
+							hasMatch = true;
+							break;
+						}
+					}
+				} catch (SQLException e1) {					
+					e1.printStackTrace();
+				}*/
+				
 				for (DPFPTemplate template : VerificationDialog.this.templates.values()) {
 					final DPFPVerificationResult result = verification.verify(e.getFeatureSet(), template);
 					e.setMatched(result.isVerified());		// report matching status
 					bestFAR = Math.min(bestFAR, result.getFalseAcceptRate());
 					if (e.getMatched()) {
+						System.out.println("Machea");
 						hasMatch = true;
 						break;
 					}
