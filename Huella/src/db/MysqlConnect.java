@@ -327,6 +327,11 @@ public final class MysqlConnect {
 		return existe;		
 	}
 	
+	/**
+	 * Devuelve el idTipoDocuemnto
+	 * @param String nombre
+	 * @return ResultSet
+	 */
 	public ResultSet getIndiceTipoDocumento(String nombre){
 		
 		String query ="Select id_tipo_documento from tipo_documento where codigo = '" + nombre + "'";    	
@@ -412,6 +417,11 @@ public final class MysqlConnect {
 		
 	}
 	
+	/**
+	 * Guardar el movimiento
+	 * @param String tipoMovimiento
+	 * @param int idHuella
+	 */
 	public void guardarMovimiento(String tipoMovimiento, int idHuella){
 		try {
 			conn.setAutoCommit(false);
@@ -436,4 +446,23 @@ public final class MysqlConnect {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Devuelvo todas las huellas
+	 * @return ResultSet
+	 */
+	public ResultSet getAllFingers(){
+		
+		String query = "Select id_huella, id_persona, huella, nro_dedo from huellas where huella is not null;";    	
+    	
+    	ResultSet resultado = null;
+		try {
+			resultado = this.query(query);
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return resultado;
+		
+	}
+	
 }
