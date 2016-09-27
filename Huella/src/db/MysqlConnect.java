@@ -465,4 +465,19 @@ public final class MysqlConnect {
 		
 	}
 	
+	public ResultSet findPersona(String prmApellido, String prmNombre){
+		
+		String query = "Select id_persona, apellido, nombre from persona where apellido like '" + prmApellido + "' or "
+				+ " nombre like '" + prmNombre + "'";    	
+    	
+    	ResultSet resultado = null;
+		try {
+			resultado = this.query(query);
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return resultado;
+		
+	}
+	
 }
