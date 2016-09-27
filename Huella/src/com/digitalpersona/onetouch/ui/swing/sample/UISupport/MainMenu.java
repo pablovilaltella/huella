@@ -17,6 +17,7 @@ import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
+import persona.BuscarPersona;
 import persona.PersonaABM;
 import persona.RegistroIngreso;
 
@@ -79,13 +80,22 @@ public class MainMenu extends JFrame {
 		
 		ActionListener nuevaPersona = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //JOptionPane.showMessageDialog(null,"Presionaste el JMenuItem Acerca de");
             	new PersonaABM();
             }   
         };
         mntmNewMenuItem.addActionListener(nuevaPersona);        
         mnInicio.add(mntmNewMenuItem);
-		
+        
+        JMenuItem mntmMenuItemBuscarPersona = new JMenuItem("Buscar Persona");
+        ActionListener buscarPersona = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	new BuscarPersona();
+            }   
+        };
+        
+        mntmMenuItemBuscarPersona.addActionListener(buscarPersona);
+        mnInicio.add(mntmMenuItemBuscarPersona);
+        
 		JMenu mnReportes = new JMenu("Reportes");
 		menuBar.add(mnReportes);
 		
@@ -108,6 +118,7 @@ public class MainMenu extends JFrame {
 		
 		JButton btnEnrolar = new JButton("Enrolar");
 		btnEnrolar.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				new PersonaABM();
 			}
@@ -121,6 +132,7 @@ public class MainMenu extends JFrame {
 		
 		JButton btnIngreso = new JButton("Ingreso");
 		btnIngreso.addActionListener(new ActionListener() {
+			@Override
 			public void actionPerformed(ActionEvent e) {
 				new RegistroIngreso();
 			}
@@ -129,6 +141,12 @@ public class MainMenu extends JFrame {
 		getContentPane().add(btnIngreso);
 		
 		JButton btnBuscarPersona = new JButton("Buscar Persona");
+		btnBuscarPersona.addActionListener(new ActionListener() {			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new BuscarPersona();				
+			}
+		});
 		btnBuscarPersona.setBounds(75, 245, 130, 49);
 		getContentPane().add(btnBuscarPersona);
 
