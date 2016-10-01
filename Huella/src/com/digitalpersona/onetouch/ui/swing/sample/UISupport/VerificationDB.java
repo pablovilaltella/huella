@@ -16,7 +16,6 @@ import java.awt.*;
 import java.awt.event.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.*;
 
 /**
  * Enrollment control test
@@ -28,8 +27,8 @@ public class VerificationDB
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private EnumMap<DPFPFingerIndex, DPFPTemplate> templates;
-    private int farRequested;
+//	private EnumMap<DPFPFingerIndex, DPFPTemplate> templates;
+//    private int farRequested;
     private int farAchieved;
     private DPFPVerificationControl verificationControl;
     private boolean matched;
@@ -59,8 +58,8 @@ public class VerificationDB
 
     public VerificationDB(Frame owner) {
 		super(owner, true);
-		this.templates = templates;
-		this.farRequested = farRequested;
+//		this.templates = templates;
+//		this.farRequested = farRequested;
 		// traigo la conexion
 		conection = MysqlConnect.getDbCon();
 		setTitle("Verificar Huella");
@@ -79,7 +78,7 @@ public class VerificationDB
 				int bestFAR = DPFPVerification.PROBABILITY_ONE;
 				boolean hasMatch = false;
 				
-				/** TODO: Por la forma que esta hecho hay que traer todas las huellas e ir verificando
+				/**  Por la forma que esta hecho hay que traer todas las huellas e ir verificando
 				* y hacer el corte si la encuentra (VER SI HAY OTRA FORMA MAS EFECTIVA)
 				**/
 				
@@ -90,17 +89,13 @@ public class VerificationDB
 						byte[] huellaByte = huellas.getBytes(3);
 						DPFPTemplate huellaTemplate = DPFPGlobal.getTemplateFactory().createTemplate();
 						// Lo deserializo
-//						System.out.println("antes deserializo");
 						huellaTemplate.deserialize(huellaByte);
-//						System.out.println("deserializo");
 						// uso el verify de la api
 						final DPFPVerificationResult result = verification.verify(e.getFeatureSet(), huellaTemplate);
-//						System.out.println("antes verify");
 						e.setMatched(result.isVerified());		// report matching status
-//						System.out.println("despues verify");
 						bestFAR = Math.min(bestFAR, result.getFalseAcceptRate());
 						if (e.getMatched()) {
-							System.out.println("Machea");
+							System.out.println("Existe la huella");
 							setIdHuella(huellas.getInt(1));
 							setIdPersona(huellas.getInt(2));
 							hasMatch = true;
@@ -108,6 +103,7 @@ public class VerificationDB
 							break;
 						}else{
 							System.out.println("NO COINCIDE");
+							//break;
 						}
 					}
 				} catch (SQLException e1) {					
