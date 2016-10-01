@@ -419,25 +419,23 @@ public final class MysqlConnect {
 	
 	/**
 	 * Guardar el movimiento
-	 * @param String tipoMovimiento
 	 * @param int idHuella
+	 * @param int idPersona
+	 * @param String tipoMovimiento
 	 */
-	public void guardarMovimiento(String tipoMovimiento, int idHuella){
+	public void guardarMovimiento(int idHuella, int idPersona, String tipoMovimiento){
 		try {
-			conn.setAutoCommit(false);
-			// Inserto la persona
-			String queryPersona = " insert into movimiento (id_huella, tipo, fecha)"
+			// Inserto el movimiento
+			String queryPersona = " insert into movimiento (id_huella, id_persona, tipo)"
 	        + " values (?, ?, ?)";
 			
 			// create the mysql insert preparedstatement
 			PreparedStatement preparedStmt = conn.prepareStatement(queryPersona,Statement.RETURN_GENERATED_KEYS);
-
-			Date fechaEvento = (Date) new java.util.Date();
-			
+		
 			preparedStmt.setInt(1, idHuella);
-			preparedStmt.setString(2, tipoMovimiento);
-			preparedStmt.setDate(3, fechaEvento);
-	
+			preparedStmt.setInt(2, idPersona);
+			preparedStmt.setString(3, tipoMovimiento);
+
 			// execute the preparedstatement
 			preparedStmt.execute();
 
@@ -478,6 +476,21 @@ public final class MysqlConnect {
 		}
 		return resultado;
 		
+	}
+	
+	public ResultSet getDatosPersona(int idPers){
+		String query = "Select p.id_persona, apellido, nombre, profesion, pd.numero, td.codigo "
+				+ "from persona p join persona_documento pd on p.id_persona = pd.id_persona "
+				+ "join tipo_documento td on td.id_tipo_documento = pd.id_tipo_documento "
+				+ " where p.id_persona = '" + idPers + "'";    	
+    	
+    	ResultSet resultado = null;
+		try {
+			resultado = this.query(query);
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return resultado;
 	}
 	
 }
