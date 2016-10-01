@@ -49,9 +49,8 @@ public class EnrollmentDialog
                     throw new DPFPEnrollmentVetoException(reasonToFail);
                 } else{
                     EnrollmentDialog.this.templates.put(e.getFingerIndex(), e.getTemplate());
-                    System.out.println("Enrolo?");
+                    System.out.println("Guardo la huella");
                     
-                    //TODO:: ACA GUARDO DIRECTAMENTE ????
                     DPFPTemplate dedo = e.getTemplate();
                     DPFPFingerIndex indiceDedo = e.getFingerIndex();
                     
