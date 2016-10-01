@@ -19,7 +19,7 @@ import javax.swing.JLabel;
 
 import persona.BuscarPersona;
 import persona.PersonaABM;
-import persona.RegistroIngreso;
+import persona.RegistroMovimiento;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -127,6 +127,12 @@ public class MainMenu extends JFrame {
 		getContentPane().add(btnEnrolar);
 		
 		JButton btnEgreso = new JButton("Egreso");
+		btnEgreso.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				// Registro la salida
+				new RegistroMovimiento("S");
+			}
+		});
 		btnEgreso.setBounds(290, 245, 130, 49);
 		getContentPane().add(btnEgreso);
 		
@@ -134,7 +140,8 @@ public class MainMenu extends JFrame {
 		btnIngreso.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new RegistroIngreso();
+				// Registro la entrada
+				new RegistroMovimiento("E");
 			}
 		});
 		btnIngreso.setBounds(290, 110, 130, 49);
