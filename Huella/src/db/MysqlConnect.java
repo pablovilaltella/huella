@@ -313,7 +313,7 @@ public final class MysqlConnect {
 		try {
 			ResultSet idTipo = getIndiceTipoDocumento(tipoDoc);
 			idTipo.next();
-			String query ="Select id_persona id_tipo_documento from persona_documento where numero = '" + numeroDoc + "' and id_tipo_documento = '" + idTipo.getInt(1) + "'";    	
+			String query ="Select id_persona id_tipo_documento from persona where numero = '" + numeroDoc + "' and id_tipo_documento = '" + idTipo.getInt(1) + "'";    	
 			
 			ResultSet resultado = null;
 			resultado = this.query(query);
@@ -354,15 +354,22 @@ public final class MysqlConnect {
 		try {
 			conn.setAutoCommit(false);
 			// Inserto la persona
-			String queryPersona = " insert into persona (nombre, apellido, profesion)"
-	        + " values (?, ?, ?)";
+			String queryPersona = " insert into persona (nombre, apellido, profesion, id_tipo_documento, numero)"
+	        + " values (?, ?, ?, ?, ?)";
 			
 			// create the mysql insert preparedstatement
 			PreparedStatement preparedStmt = conn.prepareStatement(queryPersona,Statement.RETURN_GENERATED_KEYS);
+			
+			// traigo id del tipo doc
+			System.out.println(selectedItem);
+			ResultSet clave = getIndiceTipoDocumento(selectedItem);
+			clave.next();
 
 			preparedStmt.setString(1, nombre);
 			preparedStmt.setString(2, apellido);
 			preparedStmt.setString(3, profesion);
+			preparedStmt.setInt(4, clave.getInt(1));
+			preparedStmt.setString(5, nro);
 	
 			// execute the preparedstatement
 			preparedStmt.execute();
@@ -371,24 +378,7 @@ public final class MysqlConnect {
 
 			key.next();
 			System.out.println(key.getInt(1));
-			System.out.println(selectedItem);
-			ResultSet clave = getIndiceTipoDocumento(selectedItem);
-			clave.next();
-			
-			// Inserto el DNI			
-			String queryDoc = " insert into persona_documento (id_persona, id_tipo_documento, numero)"
-			        + " values (?, ?, ?)";
-					
-			// create the mysql insert preparedstatement
-			PreparedStatement preparedStmtDoc = conn.prepareStatement(queryDoc);
 
-			preparedStmtDoc.setInt(1, key.getInt(1));
-			preparedStmtDoc.setInt(2, clave.getInt(1));
-			preparedStmtDoc.setString(3, nro);
-			
-			// execute the preparedstatement
-			preparedStmtDoc.execute();
-			
 			// Inserto la direccion
 			String queryDireccion = " insert into direccion (id_persona, calle, numero, dpto, piso)"
 			        + " values (?, ?, ?, ? ,?)";
@@ -479,9 +469,8 @@ public final class MysqlConnect {
 	}
 	
 	public ResultSet getDatosPersona(int idPers){
-		String query = "Select p.id_persona, apellido, nombre, profesion, pd.numero, td.codigo "
-				+ "from persona p join persona_documento pd on p.id_persona = pd.id_persona "
-				+ "join tipo_documento td on td.id_tipo_documento = pd.id_tipo_documento "
+		String query = "Select p.id_persona, apellido, nombre, profesion, p.numero, td.codigo "
+				+ "from persona p join tipo_documento td on td.id_tipo_documento = p.id_tipo_documento "
 				+ " where p.id_persona = '" + idPers + "'";    	
     	
     	ResultSet resultado = null;
