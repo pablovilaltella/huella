@@ -16,7 +16,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
-public class RegistroIngreso extends JFrame{
+public class RegistroMovimiento extends JFrame{
 	
 	/**
 	 * 
@@ -30,9 +30,16 @@ public class RegistroIngreso extends JFrame{
 	private JLabel lblDatoId;
 	private int idHuella;
 	private int idPersona;
+	private String tipo;
+	private String nombreMovimiento;
 
-	public RegistroIngreso (){
-		super("Registro de Ingreso");
+	public RegistroMovimiento (String unTipo){
+		super("Registro de Movimiento");
+		setTipo(unTipo);
+		if (getTipo() == "E")
+			setNombreMovimiento("Ingreso");
+		else
+			setNombreMovimiento("Egreso");
 		
 		setState(Frame.NORMAL);
 		setResizable(false);
@@ -87,8 +94,7 @@ public class RegistroIngreso extends JFrame{
 		JButton btnBuscarHuella = new JButton("Buscar Huella");
 		btnBuscarHuella.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO: Buscar por la huella
-				VerificationDB dlg = new VerificationDB(RegistroIngreso.this);
+				VerificationDB dlg = new VerificationDB(RegistroMovimiento.this);
 				
             	dlg.setVisible(true);
             	setIdPersona(dlg.getIdPersona());
@@ -106,15 +112,14 @@ public class RegistroIngreso extends JFrame{
 		btnNewButton.setBounds(102, 254, 140, 25);
 		getContentPane().add(btnNewButton);
 		
-		JButton btnGuardarIngreso = new JButton("Guardar Ingreso");
-		btnGuardarIngreso.addActionListener(new ActionListener() {
+		JButton btnGuardar = new JButton("Guardar " + getNombreMovimiento());
+		btnGuardar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				System.out.println(lblDatoApellido.getText());
 				if (existeHuella()){
-					//TODO: GUARDO EL INGRESO
-					System.out.println("GUARDO EL INGRESO");
-					conection.guardarMovimiento(getIdHuella(),getIdPersona(),"E");
-					JOptionPane.showMessageDialog(getContentPane(),"Ingreso guardado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE);
+					System.out.println("GUARDO EL Movimiento " + getTipo());
+					conection.guardarMovimiento(getIdHuella(),getIdPersona(),getTipo());
+					JOptionPane.showMessageDialog(getContentPane(), getNombreMovimiento() + " guardado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 				}
 				else{
@@ -122,8 +127,8 @@ public class RegistroIngreso extends JFrame{
 				}
 			}
 		});
-		btnGuardarIngreso.setBounds(185, 30, 130, 25);
-		getContentPane().add(btnGuardarIngreso);
+		btnGuardar.setBounds(185, 30, 130, 25);
+		getContentPane().add(btnGuardar);
 		
 		JLabel lblId = new JLabel("Id:");
 		lblId.setBounds(25, 66, 54, 20);
@@ -192,5 +197,21 @@ public class RegistroIngreso extends JFrame{
 
 	public void setIdPersona(int idPersona) {
 		this.idPersona = idPersona;
+	}
+
+	public String getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
+	}
+
+	public String getNombreMovimiento() {
+		return nombreMovimiento;
+	}
+
+	public void setNombreMovimiento(String nombreMovimiento) {
+		this.nombreMovimiento = nombreMovimiento;
 	}
 }
