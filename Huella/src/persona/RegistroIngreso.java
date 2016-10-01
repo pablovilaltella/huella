@@ -8,14 +8,12 @@ import db.MysqlConnect;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
-import com.digitalpersona.onetouch.ui.swing.sample.UISupport.MainForm;
 import com.digitalpersona.onetouch.ui.swing.sample.UISupport.VerificationDB;
-import com.digitalpersona.onetouch.ui.swing.sample.UISupport.VerificationDialog;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.beans.PropertyChangeEvent;
-import java.beans.PropertyChangeListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class RegistroIngreso extends JFrame{
@@ -30,6 +28,8 @@ public class RegistroIngreso extends JFrame{
 	private JLabel lblDatoNro;
 	private JLabel lblDatoProfesion;
 	private JLabel lblDatoId;
+	private int idHuella;
+	private int idPersona;
 
 	public RegistroIngreso (){
 		super("Registro de Ingreso");
@@ -89,24 +89,14 @@ public class RegistroIngreso extends JFrame{
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO: Buscar por la huella
 				VerificationDB dlg = new VerificationDB(RegistroIngreso.this);
-				/*dlg.addPropertyChangeListener(new PropertyChangeListener()
-        		{
-        			public void propertyChange(final PropertyChangeEvent e) {
-        				String name = e.getPropertyName();
-        				if (VerificationDB.FAR_PROPERTY.equals(name)) {
-          			        //farAchieved.setText("" + (Integer)e.getNewValue());
-          			        
-        				} else
-        				if (VerificationDB.MATCHED_PROPERTY.equals(name)) {
-        					//fingerMatched.setSelected((Boolean)e.getNewValue());
-        					System.out.println("Correcto");
-        				}
-        			}
-        		});*/
+				
             	dlg.setVisible(true);
-            	//int x = dlg.getIdPersona();
-            	lblDatoId.setText(String.valueOf(dlg.getIdPersona()));
+            	setIdPersona(dlg.getIdPersona());
+            	ResultSet persona = conection.getDatosPersona(getIdPersona());
+            	setIdHuella(dlg.idHuella);
+            	asignarDatosPersona(persona);
 			}
+
 		});
 		btnBuscarHuella.setBounds(25, 30, 120, 25);
 		getContentPane().add(btnBuscarHuella);
@@ -123,7 +113,9 @@ public class RegistroIngreso extends JFrame{
 				if (existeHuella()){
 					//TODO: GUARDO EL INGRESO
 					System.out.println("GUARDO EL INGRESO");
-					
+					conection.guardarMovimiento(getIdHuella(),getIdPersona(),"E");
+					JOptionPane.showMessageDialog(getContentPane(),"Ingreso guardado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE);
+					dispose();
 				}
 				else{
 					JOptionPane.showMessageDialog(getContentPane(),"No se ha recuperado ninguna persona","Error",JOptionPane.ERROR_MESSAGE);
@@ -151,5 +143,54 @@ public class RegistroIngreso extends JFrame{
 		}
 		
 		return retorno;
+	}
+	
+	
+	/**
+	 * Asigno a los labels los datos de la persona
+	 * @param ResultSet persona
+	 */
+	private void asignarDatosPersona(ResultSet persona) {
+		
+		int idPersona = 0;
+		String apellido = null;
+		String nombre = null;
+		String profesion = null;
+		int nro = 0;
+		String tipodoc = null;
+		try {
+			while (persona.next()){
+				idPersona = persona.getInt(1);
+				apellido = persona.getString(2);
+				nombre = persona.getString(3);
+				profesion = persona.getString(4);
+				nro = persona.getInt(5);
+				tipodoc = persona.getString(6);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		lblDatoId.setText(String.valueOf(idPersona));
+		lblDatoApellido.setText(apellido);
+		lblDatoNombre.setText(nombre);
+		lblDatoProfesion.setText(profesion);
+		lblDatoNro.setText(String.valueOf(nro));
+		lblDatoTipoDoc.setText(tipodoc);
+	}
+
+	public int getIdHuella() {
+		return idHuella;
+	}
+
+	public void setIdHuella(int idHuella) {
+		this.idHuella = idHuella;
+	}
+
+	public int getIdPersona() {
+		return idPersona;
+	}
+
+	public void setIdPersona(int idPersona) {
+		this.idPersona = idPersona;
 	}
 }
