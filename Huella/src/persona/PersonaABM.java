@@ -195,7 +195,7 @@ public class PersonaABM extends JFrame{
 	}
 	
 	private boolean hayVacios(){
-		//TODO: Alinear el texto 
+
 		boolean resultado = false;
 		if (textFieldApellido.getText().length() == 0){
 			lblError.setText("<html> <font color='red'> " + errorApellido + " </font></html>");
