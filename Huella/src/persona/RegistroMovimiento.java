@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.awt.event.ActionEvent;
 
 public class RegistroMovimiento extends JFrame{
@@ -118,8 +120,11 @@ public class RegistroMovimiento extends JFrame{
 				System.out.println(lblDatoApellido.getText());
 				if (existeHuella()){
 					System.out.println("GUARDO EL Movimiento " + getTipo());
+					Date fecha = new Date();
+					String fechaStr =  new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(fecha);
 					conection.guardarMovimiento(getIdHuella(),getIdPersona(),getTipo());
-					JOptionPane.showMessageDialog(getContentPane(), getNombreMovimiento() + " guardado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(getContentPane(), getNombreMovimiento() + " de " + lblDatoNombre.getText() +
+							", " + lblDatoApellido.getText() + " el día " + fechaStr + " guardado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE);
 					dispose();
 				}
 				else{
