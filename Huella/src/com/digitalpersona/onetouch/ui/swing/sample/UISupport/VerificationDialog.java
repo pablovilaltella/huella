@@ -60,33 +60,6 @@ public class VerificationDialog
 				/** TODO: Por la forma que esta hecho hay que traer todas las huellas e ir verificando
 				* y hacer el corte si la encuentra (VER SI HAY OTRA FORMA MAS EFECTIVA)
 				**/
-				/*
-				DPFPFeatureSet dedo = e.getFeatureSet();
-				dedo.deserialize(null);
-				// traigo la conexion
-				
-				ResultSet huellas = conection.getAllFingers();
-				
-				try {
-					while (huellas.next()) {
-						// Leo el bytte de la base
-						byte[] huellaByte = huellas.getBytes(3);
-						DPFPTemplate huellaTemplate = null;
-						// Lo deserializo
-						huellaTemplate.deserialize(huellaByte);
-						// uso el verify de la api
-						final DPFPVerificationResult result = verification.verify(e.getFeatureSet(), huellaTemplate);
-						e.setMatched(result.isVerified());		// report matching status
-						bestFAR = Math.min(bestFAR, result.getFalseAcceptRate());
-						if (e.getMatched()) {
-							System.out.println("Machea");
-							hasMatch = true;
-							break;
-						}
-					}
-				} catch (SQLException e1) {					
-					e1.printStackTrace();
-				}*/
 				
 				for (DPFPTemplate template : VerificationDialog.this.templates.values()) {
 					final DPFPVerificationResult result = verification.verify(e.getFeatureSet(), template);
