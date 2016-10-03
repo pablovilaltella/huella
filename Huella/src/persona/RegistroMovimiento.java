@@ -121,7 +121,7 @@ public class RegistroMovimiento extends JFrame{
 				if (existeHuella()){
 					System.out.println("GUARDO EL Movimiento " + getTipo());
 					Date fecha = new Date();
-					String fechaStr =  new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(fecha);
+					String fechaStr =  new SimpleDateFormat("dd-MM-yyyy 'a las' HH:mm:ss").format(fecha);
 					conection.guardarMovimiento(getIdHuella(),getIdPersona(),getTipo());
 					JOptionPane.showMessageDialog(getContentPane(), getNombreMovimiento() + " de " + lblDatoNombre.getText() +
 							", " + lblDatoApellido.getText() + " el día " + fechaStr + " guardado correctamente","Guardado",JOptionPane.INFORMATION_MESSAGE);
