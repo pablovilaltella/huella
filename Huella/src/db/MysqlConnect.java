@@ -453,11 +453,13 @@ public final class MysqlConnect {
 		
 	}
 	
-	public ResultSet findPersona(String prmApellido, String prmNombre){
-		
-		String query = "Select id_persona, apellido, nombre from persona where apellido like '" + prmApellido + "' or "
-				+ " nombre like '" + prmNombre + "'";    	
-    	
+	public ResultSet findPersona(String prmApellido, String prmNombre, String prmNumero, String prmTipo){
+		// TODO: ARMAR LA CONSULTA AGREGANDO LOS QUE NO SON BLANCOS
+		String query = "Select id_persona, apellido, nombre, codigo as tipo_doc, numero, profesion "
+				+ "from persona p join tipo_documento td on p.id_tipo_documento = td.id_tipo_documento "
+				+ "where apellido like '%" + prmApellido + "%' or " + "nombre like '%" + prmNombre + "%'"
+				+ " or (numero like '%" + prmNumero + "%'" + " and td.codigo = '" + prmTipo + "')";    	
+    	System.out.println(query);
     	ResultSet resultado = null;
 		try {
 			resultado = this.query(query);
