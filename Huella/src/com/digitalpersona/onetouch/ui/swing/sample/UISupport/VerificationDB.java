@@ -20,8 +20,7 @@ import java.sql.SQLException;
 /**
  * Enrollment control test
  */
-public class VerificationDB
-	extends JDialog
+public class VerificationDB extends JDialog
 {
     /**
 	 * 
@@ -65,23 +64,23 @@ public class VerificationDB
 		setTitle("Verificar Huella");
     	setResizable(false);
     	// Traigo todas las huellas
-    	ResultSet huellas = conection.getAllFingers();
+    	
 
 		verificationControl = new DPFPVerificationControl();
 		verificationControl.addVerificationListener(new DPFPVerificationListener()
 		{
 			public void captureCompleted(DPFPVerificationEvent e) throws DPFPVerificationVetoException
 			{
-				final DPFPVerification verification = 
+				DPFPVerification verification = 
 					DPFPGlobal.getVerificationFactory().createVerification(FAR);
-//				e.setStopCapture(false);	// we want to continue capture until the dialog is closed
+				e.setStopCapture(false);	// we want to continue capture until the dialog is closed
 				int bestFAR = DPFPVerification.PROBABILITY_ONE;
 				boolean hasMatch = false;
 				
 				/**  Por la forma que esta hecho hay que traer todas las huellas e ir verificando
 				* y hacer el corte si la encuentra (VER SI HAY OTRA FORMA MAS EFECTIVA)
 				**/
-				
+				ResultSet huellas = conection.getAllFingers();
 				try {
 					while (huellas.next()) {
 						System.out.println("Huella de: " + huellas.getInt(2) + " \n");
@@ -91,7 +90,7 @@ public class VerificationDB
 						// Lo deserializo
 						huellaTemplate.deserialize(huellaByte);
 						// uso el verify de la api
-						final DPFPVerificationResult result = verification.verify(e.getFeatureSet(), huellaTemplate);
+						DPFPVerificationResult result = verification.verify(e.getFeatureSet(), huellaTemplate);
 						e.setMatched(result.isVerified());		// report matching status
 						bestFAR = Math.min(bestFAR, result.getFalseAcceptRate());
 						if (e.getMatched()) {
@@ -103,7 +102,7 @@ public class VerificationDB
 							break;
 						}else{
 							System.out.println("NO COINCIDE");
-							//break;
+//							break;
 						}
 					}
 				} catch (SQLException e1) {					
