@@ -28,7 +28,7 @@ public class BuscarPersona extends JFrame {
 	private JComboBox<String> comboBoxTD;
 	private JTextField textFieldApellido;
 	private JTextField textFieldNombre;
-	private JTextField textField;
+	private JTextField textFieldNumero;
 	private JLabel lblTipoDoc;
 	private JLabel lblNewLabel;
 
@@ -89,7 +89,7 @@ public class BuscarPersona extends JFrame {
 				DefaultTableModel dm = (DefaultTableModel)table.getModel();
 				dm.getDataVector().removeAllElements();
 				 	
-				ResultSet personas = conection.findPersona(textFieldApellido.getText(), textFieldNombre.getText());
+				ResultSet personas = conection.findPersona(textFieldApellido.getText(), textFieldNombre.getText(),textFieldNumero.getText(),comboBoxTD.getSelectedItem().toString());
 				
 				try {
 					while (personas.next()){
@@ -104,10 +104,10 @@ public class BuscarPersona extends JFrame {
 		btnBuscar.setBounds(615, 40, 89, 23);
 		getContentPane().add(btnBuscar);
 		
-		textField = new JTextField();
-		textField.setBounds(359, 61, 170, 20);
-		getContentPane().add(textField);
-		textField.setColumns(10);
+		textFieldNumero = new JTextField();
+		textFieldNumero.setBounds(359, 61, 170, 20);
+		getContentPane().add(textFieldNumero);
+		textFieldNumero.setColumns(10);
 		
 		lblTipoDoc = new JLabel("Tipo Documento:");
 		lblTipoDoc.setBounds(22, 64, 93, 14);
