@@ -32,6 +32,8 @@ public class BuscarPersona extends JFrame {
 	private JLabel lblTipoDoc;
 	private JLabel lblNumero;
 	private JTextField textFieldId;
+	private JLabel lblProfesin;
+	private JTextField textFieldProfesion;
 
 	public BuscarPersona(){
 		
@@ -59,26 +61,26 @@ public class BuscarPersona extends JFrame {
 		table.setModel(dtm);
 		
 		JLabel lblApellido = new JLabel("Apellido:");
-		lblApellido.setBounds(114, 20, 46, 20);
+		lblApellido.setBounds(135, 20, 50, 20);
 		getContentPane().add(lblApellido);
 		
 		JLabel lblNombre = new JLabel("Nombre::");
-		lblNombre.setBounds(350, 20, 51, 20);
+		lblNombre.setBounds(414, 20, 51, 20);
 		getContentPane().add(lblNombre);
 		
 		comboBoxTD = new JComboBox<String>();
-		comboBoxTD.setBounds(152, 63, 128, 20);
+		comboBoxTD.setBounds(123, 63, 50, 20);
 		this.cargarCombo();
 		getContentPane().add(comboBoxTD);
 		
 		textFieldApellido = new JTextField();
-		textFieldApellido.setBounds(168, 20, 170, 20);
+		textFieldApellido.setBounds(198, 20, 150, 20);
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(409, 20, 170, 20);
+		textFieldNombre.setBounds(475, 20, 150, 20);
 		getContentPane().add(textFieldNombre);
 
 		dtm.setColumnIdentifiers(new Object[]{"Id","Apellido","Nombre","Tipo doc", "Número", "Profesión"});
@@ -90,7 +92,7 @@ public class BuscarPersona extends JFrame {
 				DefaultTableModel dm = (DefaultTableModel)table.getModel();
 				dm.getDataVector().removeAllElements();
 				 	
-				ResultSet personas = conection.findPersona(textFieldId.getText(), textFieldApellido.getText(), textFieldNombre.getText(),textFieldNumero.getText(),comboBoxTD.getSelectedItem().toString());
+				ResultSet personas = conection.findPersona(textFieldId.getText(), textFieldApellido.getText(), textFieldNombre.getText(),textFieldNumero.getText(),comboBoxTD.getSelectedItem().toString(),textFieldProfesion.getText());
 				
 				try {
 					while (personas.next()){
@@ -102,24 +104,24 @@ public class BuscarPersona extends JFrame {
 				dm.fireTableDataChanged();
 			}
 		});
-		btnBuscar.setBounds(631, 19, 89, 23);
+		btnBuscar.setBounds(655, 19, 89, 23);
 		getContentPane().add(btnBuscar);
 		
 		textFieldNumero = new JTextField();
-		textFieldNumero.setBounds(409, 63, 170, 20);
+		textFieldNumero.setBounds(475, 63, 150, 20);
 		getContentPane().add(textFieldNumero);
 		textFieldNumero.setColumns(10);
 		
 		lblTipoDoc = new JLabel("Tipo Documento:");
-		lblTipoDoc.setBounds(26, 63, 101, 20);
+		lblTipoDoc.setBounds(22, 63, 101, 20);
 		getContentPane().add(lblTipoDoc);
 		
 		lblNumero = new JLabel("N\u00FAmero:");
-		lblNumero.setBounds(350, 63, 51, 20);
+		lblNumero.setBounds(422, 63, 51, 20);
 		getContentPane().add(lblNumero);
 		
 		JLabel lblId = new JLabel("Id:");
-		lblId.setBounds(26, 20, 20, 20);
+		lblId.setBounds(22, 20, 20, 20);
 		getContentPane().add(lblId);
 		
 		textFieldId = new JTextField();
@@ -133,8 +135,17 @@ public class BuscarPersona extends JFrame {
 				dispose();
 			}
 		});
-		btnCerrar.setBounds(631, 62, 89, 23);
+		btnCerrar.setBounds(655, 62, 89, 23);
 		getContentPane().add(btnCerrar);
+		
+		lblProfesin = new JLabel("Profesi\u00F3n:");
+		lblProfesin.setBounds(193, 63, 62, 20);
+		getContentPane().add(lblProfesin);
+		
+		textFieldProfesion = new JTextField();
+		textFieldProfesion.setColumns(10);
+		textFieldProfesion.setBounds(265, 63, 150, 20);
+		getContentPane().add(textFieldProfesion);
 		
 		
 		setVisible(true);
