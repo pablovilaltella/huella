@@ -453,12 +453,36 @@ public final class MysqlConnect {
 		
 	}
 	
-	public ResultSet findPersona(String prmApellido, String prmNombre, String prmNumero, String prmTipo){
-		// TODO: ARMAR LA CONSULTA AGREGANDO LOS QUE NO SON BLANCOS
+	/**
+	 *  Busco Personas por Apellido, nombre, numero, tipo_doc
+	 *  
+	 * @param String prmApellido
+	 * @param String prmNombre
+	 * @param String prmNumero
+	 * @param String prmTipo
+	 * @return ResultSet
+	 */
+	public ResultSet findPersona(String prmId, String prmApellido, String prmNombre, String prmNumero, String prmTipo){
+
+		String where = "where 1 = 1 ";
+		
+		if (!prmId.isEmpty()){
+			where = where + " AND id_persona = " + prmId;
+		}
+		if (!prmApellido.isEmpty()){
+			where = where + " AND apellido like '%" + prmApellido + "%'";
+		}
+		if (!prmNombre.isEmpty()){
+			where = where + " AND nombre like '%" + prmNombre + "%'";
+		}
+		if (!prmNumero.isEmpty()){
+			where = where + " AND (numero like '%" + prmNumero + "%' and td.codigo = '" + prmTipo + "')";
+		}
+		
 		String query = "Select id_persona, apellido, nombre, codigo as tipo_doc, numero, profesion "
 				+ "from persona p join tipo_documento td on p.id_tipo_documento = td.id_tipo_documento "
-				+ "where apellido like '%" + prmApellido + "%' or " + "nombre like '%" + prmNombre + "%'"
-				+ " or (numero like '%" + prmNumero + "%'" + " and td.codigo = '" + prmTipo + "')";    	
+				+ where;
+				    	
     	System.out.println(query);
     	ResultSet resultado = null;
 		try {
