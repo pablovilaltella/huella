@@ -30,7 +30,8 @@ public class BuscarPersona extends JFrame {
 	private JTextField textFieldNombre;
 	private JTextField textFieldNumero;
 	private JLabel lblTipoDoc;
-	private JLabel lblNewLabel;
+	private JLabel lblNumero;
+	private JTextField textFieldId;
 
 	public BuscarPersona(){
 		
@@ -57,27 +58,27 @@ public class BuscarPersona extends JFrame {
 		DefaultTableModel dtm = new DefaultTableModel();
 		table.setModel(dtm);
 		
-		JLabel lblApellido = new JLabel("Apellido");
-		lblApellido.setBounds(22, 25, 46, 14);
+		JLabel lblApellido = new JLabel("Apellido:");
+		lblApellido.setBounds(114, 20, 46, 20);
 		getContentPane().add(lblApellido);
 		
 		JLabel lblNombre = new JLabel("Nombre::");
-		lblNombre.setBounds(298, 25, 51, 14);
+		lblNombre.setBounds(350, 20, 51, 20);
 		getContentPane().add(lblNombre);
 		
 		comboBoxTD = new JComboBox<String>();
-		comboBoxTD.setBounds(125, 61, 128, 20);
+		comboBoxTD.setBounds(152, 63, 128, 20);
 		this.cargarCombo();
 		getContentPane().add(comboBoxTD);
 		
 		textFieldApellido = new JTextField();
-		textFieldApellido.setBounds(83, 23, 170, 20);
+		textFieldApellido.setBounds(168, 20, 170, 20);
 		getContentPane().add(textFieldApellido);
 		textFieldApellido.setColumns(10);
 		
 		textFieldNombre = new JTextField();
 		textFieldNombre.setColumns(10);
-		textFieldNombre.setBounds(359, 23, 170, 20);
+		textFieldNombre.setBounds(409, 20, 170, 20);
 		getContentPane().add(textFieldNombre);
 
 		dtm.setColumnIdentifiers(new Object[]{"Id","Apellido","Nombre","Tipo doc", "Número", "Profesión"});
@@ -85,11 +86,11 @@ public class BuscarPersona extends JFrame {
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				// TODO: VER COMO ACTUALIZAR LA GRILLA
+
 				DefaultTableModel dm = (DefaultTableModel)table.getModel();
 				dm.getDataVector().removeAllElements();
 				 	
-				ResultSet personas = conection.findPersona(textFieldApellido.getText(), textFieldNombre.getText(),textFieldNumero.getText(),comboBoxTD.getSelectedItem().toString());
+				ResultSet personas = conection.findPersona(textFieldId.getText(), textFieldApellido.getText(), textFieldNombre.getText(),textFieldNumero.getText(),comboBoxTD.getSelectedItem().toString());
 				
 				try {
 					while (personas.next()){
@@ -101,21 +102,39 @@ public class BuscarPersona extends JFrame {
 				dm.fireTableDataChanged();
 			}
 		});
-		btnBuscar.setBounds(615, 40, 89, 23);
+		btnBuscar.setBounds(631, 19, 89, 23);
 		getContentPane().add(btnBuscar);
 		
 		textFieldNumero = new JTextField();
-		textFieldNumero.setBounds(359, 61, 170, 20);
+		textFieldNumero.setBounds(409, 63, 170, 20);
 		getContentPane().add(textFieldNumero);
 		textFieldNumero.setColumns(10);
 		
 		lblTipoDoc = new JLabel("Tipo Documento:");
-		lblTipoDoc.setBounds(22, 64, 93, 14);
+		lblTipoDoc.setBounds(26, 63, 101, 20);
 		getContentPane().add(lblTipoDoc);
 		
-		lblNewLabel = new JLabel("N\u00FAmero:");
-		lblNewLabel.setBounds(298, 64, 51, 14);
-		getContentPane().add(lblNewLabel);
+		lblNumero = new JLabel("N\u00FAmero:");
+		lblNumero.setBounds(350, 63, 51, 20);
+		getContentPane().add(lblNumero);
+		
+		JLabel lblId = new JLabel("Id:");
+		lblId.setBounds(26, 20, 20, 20);
+		getContentPane().add(lblId);
+		
+		textFieldId = new JTextField();
+		textFieldId.setColumns(10);
+		textFieldId.setBounds(47, 20, 40, 20);
+		getContentPane().add(textFieldId);
+		
+		JButton btnCerrar = new JButton("Cerrar");
+		btnCerrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				dispose();
+			}
+		});
+		btnCerrar.setBounds(631, 62, 89, 23);
+		getContentPane().add(btnCerrar);
 		
 		
 		setVisible(true);
