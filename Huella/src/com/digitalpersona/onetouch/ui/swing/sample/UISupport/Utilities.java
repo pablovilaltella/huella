@@ -9,17 +9,17 @@ class Utilities {
     private static final EnumMap<DPFPFingerIndex, String> fingerNames;
     static {
     	fingerNames = new EnumMap<DPFPFingerIndex, String>(DPFPFingerIndex.class);
-    	fingerNames.put(DPFPFingerIndex.LEFT_PINKY,	  "left little");
-    	fingerNames.put(DPFPFingerIndex.LEFT_RING,    "left ring");
-    	fingerNames.put(DPFPFingerIndex.LEFT_MIDDLE,  "left middle");
-    	fingerNames.put(DPFPFingerIndex.LEFT_INDEX,   "left index");
-    	fingerNames.put(DPFPFingerIndex.LEFT_THUMB,   "left thumb");
+    	fingerNames.put(DPFPFingerIndex.LEFT_PINKY,	  "meñique izquierdo");
+    	fingerNames.put(DPFPFingerIndex.LEFT_RING,    "anular izquierdo");
+    	fingerNames.put(DPFPFingerIndex.LEFT_MIDDLE,  "medio izquierdo");
+    	fingerNames.put(DPFPFingerIndex.LEFT_INDEX,   "índice izquierdo");
+    	fingerNames.put(DPFPFingerIndex.LEFT_THUMB,   "pulgar izquierdo");
     	
-    	fingerNames.put(DPFPFingerIndex.RIGHT_PINKY,  "right little");
-    	fingerNames.put(DPFPFingerIndex.RIGHT_RING,   "right ring");
-    	fingerNames.put(DPFPFingerIndex.RIGHT_MIDDLE, "right middle");
-    	fingerNames.put(DPFPFingerIndex.RIGHT_INDEX,  "right index");
-    	fingerNames.put(DPFPFingerIndex.RIGHT_THUMB,  "right thumb");
+    	fingerNames.put(DPFPFingerIndex.RIGHT_PINKY,  "meñique derecho");
+    	fingerNames.put(DPFPFingerIndex.RIGHT_RING,   "anular derecho");
+    	fingerNames.put(DPFPFingerIndex.RIGHT_MIDDLE, "medio derecho");
+    	fingerNames.put(DPFPFingerIndex.RIGHT_INDEX,  "índice derecho");
+    	fingerNames.put(DPFPFingerIndex.RIGHT_THUMB,  "pulgar derecho");
     }
 
     public static String fingerName(DPFPFingerIndex finger) {
