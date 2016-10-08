@@ -462,9 +462,9 @@ public final class MysqlConnect {
 	 * @param String prmTipo
 	 * @return ResultSet
 	 */
-	public ResultSet findPersona(String prmId, String prmApellido, String prmNombre, String prmNumero, String prmTipo){
+	public ResultSet findPersona(String prmId, String prmApellido, String prmNombre, String prmNumero, String prmTipo, String prmProfesion){
 
-		String where = "where 1 = 1 ";
+		String where = "where td.codigo = '" + prmTipo + "' ";
 		
 		if (!prmId.isEmpty()){
 			where = where + " AND id_persona = " + prmId;
@@ -475,8 +475,11 @@ public final class MysqlConnect {
 		if (!prmNombre.isEmpty()){
 			where = where + " AND nombre like '%" + prmNombre + "%'";
 		}
+		if (!prmProfesion.isEmpty()){
+			where = where + " AND profesion like '%" + prmProfesion + "%'";
+		}
 		if (!prmNumero.isEmpty()){
-			where = where + " AND (numero like '%" + prmNumero + "%' and td.codigo = '" + prmTipo + "')";
+			where = where + " AND (numero like '%" + prmNumero + "%')"; // and td.codigo = '" + prmTipo + "')";
 		}
 		
 		String query = "Select id_persona, apellido, nombre, codigo as tipo_doc, numero, profesion "
