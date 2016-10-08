@@ -50,13 +50,12 @@ public class MainForm
     public MainForm() {
     	super("Enrolar huella");
     	setState(Frame.NORMAL);
-//    	setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
     	setResizable(false);    	
 
     	//// Enrollment Panel
     	
         JPanel enrollmentConfigPanel = new JPanel();
-        enrollmentConfigPanel.setBorder(BorderFactory.createTitledBorder("Enrollment"));
+//        enrollmentConfigPanel.setBorder(BorderFactory.createTitledBorder("Enrollment"));
         enrollmentConfigPanel.setLayout(new BoxLayout(enrollmentConfigPanel, BoxLayout.Y_AXIS));
 
         ///// Count
@@ -65,13 +64,13 @@ public class MainForm
         DefaultFormatter maxFormatter = (DefaultFormatter)(maxEditor.getTextField().getFormatter());
         maxFormatter.setAllowsInvalid(false);
 
-		JPanel maxcountPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
-		maxcountPanel.add(new JLabel("Max. enrolled fingerprints count"));
-        maxcountPanel.add(maxCountSpinner);
+//		JPanel maxcountPanel = new JPanel(new FlowLayout(FlowLayout.LEADING));
+//		maxcountPanel.add(new JLabel("Max. enrolled fingerprints count"));
+//        maxcountPanel.add(maxCountSpinner);
 
         ///// Fingers
         JPanel fingersPanel = new JPanel(new GridBagLayout());
-        fingersPanel.setBorder(BorderFactory.createTitledBorder("Enrolled Fingerprints"));
+        fingersPanel.setBorder(BorderFactory.createTitledBorder("Huellas Enroladas"));
         for (DPFPFingerIndex finger : DPFPFingerIndex.values())
         {
             JCheckBox jCheckBox = new JCheckBox(Utilities.fingerName(finger));
@@ -94,7 +93,7 @@ public class MainForm
                     JCheckBox cb = (JCheckBox) e.getSource();
                     if (cb.isSelected()) {
     					JOptionPane.showMessageDialog(MainForm.this,
-    							"To enroll the finger, click Enroll Fingerprints.", "Fingerprint Enrollment",
+    							"Para enrolar el dedo, haga click en Enrolar Huellas.", "Enrolar Huellas",
     							JOptionPane.INFORMATION_MESSAGE);
                     	cb.setSelected(false);
 //                      templates.put(index, fakeTemplate);
@@ -112,10 +111,10 @@ public class MainForm
             });
         }
 
-        final JCheckBox enforceFailure = new JCheckBox("Enforce enrollment or unenrollment failure");
+/*      final JCheckBox enforceFailure = new JCheckBox("Forzar enrolar o unenrollment failure");
         enforceFailure.setAlignmentX(CENTER_ALIGNMENT);
         enforceFailure.setHorizontalTextPosition(SwingConstants.LEADING);
-
+*/
 /*        final JCheckBox continueCapture = new JCheckBox("Don't stop capture");
         continueCapture.setAlignmentX(CENTER_ALIGNMENT);
         continueCapture.setHorizontalTextPosition(SwingConstants.LEADING);
@@ -127,7 +126,7 @@ public class MainForm
            		new EnrollmentDialog(MainForm.this,
            				maxCount.getNumber().intValue(),
            				idPersonaAEnrolar,
-           				enforceFailure.isSelected() ? "Just because I'm not in a mood." : null,
+           				null, //enforceFailure.isSelected() ? "Just because I'm not in a mood." : null,
            				templates
            			).setVisible(true);
             	UpdateUI();
@@ -135,9 +134,9 @@ public class MainForm
         });
         enrollButton.setAlignmentX(CENTER_ALIGNMENT);
 
-        enrollmentConfigPanel.add(maxcountPanel);
+//        enrollmentConfigPanel.add(maxcountPanel);
         enrollmentConfigPanel.add(fingersPanel);
-        enrollmentConfigPanel.add(enforceFailure);
+//        enrollmentConfigPanel.add(enforceFailure);
         enrollmentConfigPanel.add(Box.createVerticalStrut(4));
         enrollmentConfigPanel.add(enrollButton);
         enrollmentConfigPanel.add(Box.createVerticalStrut(4));
@@ -145,7 +144,7 @@ public class MainForm
         //// Verification Panel
 
         JPanel verificationConfigPanel = new JPanel();
-        verificationConfigPanel.setBorder(BorderFactory.createTitledBorder("Verification"));
+        verificationConfigPanel.setBorder(BorderFactory.createTitledBorder("Verificación"));
         verificationConfigPanel.setLayout(new BoxLayout(verificationConfigPanel, BoxLayout.Y_AXIS));
 
         ///// False Accept Rate
