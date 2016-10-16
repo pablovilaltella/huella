@@ -3,8 +3,6 @@ package com.digitalpersona.onetouch.ui.swing.sample.UISupport;
 import com.digitalpersona.onetouch.*;
 import com.digitalpersona.onetouch.verification.*;
 
-import db.MysqlConnect;
-
 import com.digitalpersona.onetouch.ui.swing.DPFPVerificationControl;
 import com.digitalpersona.onetouch.ui.swing.DPFPVerificationEvent;
 import com.digitalpersona.onetouch.ui.swing.DPFPVerificationListener;
@@ -31,7 +29,6 @@ public class VerificationDialog
     private int farAchieved;
     private DPFPVerificationControl verificationControl;
     private boolean matched;
-    private MysqlConnect conection;
     
     static final String FAR_PROPERTY = "FAR";
     static final String MATCHED_PROPERTY = "Matched";
@@ -40,7 +37,6 @@ public class VerificationDialog
 		super(owner, true);
 		this.templates = templates;
 		this.farRequested = farRequested;
-		conection = MysqlConnect.getDbCon();
 		setTitle("Verificar Huella");
     	setResizable(false);    	
 
