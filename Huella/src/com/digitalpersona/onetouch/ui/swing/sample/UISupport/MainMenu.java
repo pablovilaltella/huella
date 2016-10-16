@@ -8,18 +8,15 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 import javax.swing.WindowConstants;
 
-import java.awt.Component;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 
 import persona.BuscarPersona;
 import persona.PersonaABM;
 import persona.RegistroMovimiento;
+import persona.ReporteMovimientos;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -76,8 +73,8 @@ public class MainMenu extends JFrame {
 		JMenu mnInicio = new JMenu("Inicio");
 		menuBar.add(mnInicio);
 		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Nueva Persona");
-		
+		// ENROLAR
+		JMenuItem mntmNewMenuItem = new JMenuItem("Enrolar");		
 		ActionListener nuevaPersona = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
             	new PersonaABM();
@@ -86,6 +83,7 @@ public class MainMenu extends JFrame {
         mntmNewMenuItem.addActionListener(nuevaPersona);        
         mnInicio.add(mntmNewMenuItem);
         
+        // BUSCAR PERSONA
         JMenuItem mntmMenuItemBuscarPersona = new JMenuItem("Buscar Persona");
         ActionListener buscarPersona = new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -96,10 +94,45 @@ public class MainMenu extends JFrame {
         mntmMenuItemBuscarPersona.addActionListener(buscarPersona);
         mnInicio.add(mntmMenuItemBuscarPersona);
         
+        
+        // INGRESO
+        JMenuItem mntmMenuItemIngreso = new JMenuItem("Ingreso");
+        ActionListener ingreso = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	// Registro el ingreso
+            	new RegistroMovimiento("E");
+            }   
+        };
+        
+        mntmMenuItemIngreso.addActionListener(ingreso);
+        mnInicio.add(mntmMenuItemIngreso);
+        
+        
+        // EGRESO
+        JMenuItem mntmMenuItemEgreso = new JMenuItem("Egreso");
+        ActionListener egreso = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	// Registro el ingreso
+            	new RegistroMovimiento("S");
+            }   
+        };
+        
+        mntmMenuItemEgreso.addActionListener(egreso);
+        mnInicio.add(mntmMenuItemEgreso);
+        
 		JMenu mnReportes = new JMenu("Reportes");
 		menuBar.add(mnReportes);
 		
-		JMenuItem mntmListado = new JMenuItem("Listado");
+		JMenuItem mntmListado = new JMenuItem("Movimentos");
+		
+		ActionListener listadoListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	// LLAMO AL LISTADO
+            	new ReporteMovimientos();
+            }   
+        };
+        
+        mntmListado.addActionListener(listadoListener);		
 		mnReportes.add(mntmListado);
 		getContentPane().setLayout(null);
 		
@@ -123,7 +156,7 @@ public class MainMenu extends JFrame {
 				new PersonaABM();
 			}
 		});
-		btnEnrolar.setBounds(75, 110, 130, 49);
+		btnEnrolar.setBounds(75, 102, 130, 49);
 		getContentPane().add(btnEnrolar);
 		
 		JButton btnEgreso = new JButton("Egreso");
@@ -133,7 +166,7 @@ public class MainMenu extends JFrame {
 				new RegistroMovimiento("S");
 			}
 		});
-		btnEgreso.setBounds(290, 245, 130, 49);
+		btnEgreso.setBounds(290, 237, 130, 49);
 		getContentPane().add(btnEgreso);
 		
 		JButton btnIngreso = new JButton("Ingreso");
@@ -144,7 +177,7 @@ public class MainMenu extends JFrame {
 				new RegistroMovimiento("E");
 			}
 		});
-		btnIngreso.setBounds(290, 110, 130, 49);
+		btnIngreso.setBounds(290, 102, 130, 49);
 		getContentPane().add(btnIngreso);
 		
 		JButton btnBuscarPersona = new JButton("Buscar Persona");
@@ -154,27 +187,9 @@ public class MainMenu extends JFrame {
 				new BuscarPersona();				
 			}
 		});
-		btnBuscarPersona.setBounds(75, 245, 130, 49);
+		btnBuscarPersona.setBounds(75, 237, 130, 49);
 		getContentPane().add(btnBuscarPersona);
 
 		setVisible(true);
-	}
-
-	private static void addPopup(Component component, final JPopupMenu popup) {
-		component.addMouseListener(new MouseAdapter() {
-			public void mousePressed(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			public void mouseReleased(MouseEvent e) {
-				if (e.isPopupTrigger()) {
-					showMenu(e);
-				}
-			}
-			private void showMenu(MouseEvent e) {
-				popup.show(e.getComponent(), e.getX(), e.getY());
-			}
-		});
 	}
 }
