@@ -436,6 +436,55 @@ public final class MysqlConnect {
 	}
 	
 	/**
+	 * Traigo los movimientos con distitnos filtros
+	 * @param prmId
+	 * @param prmApellido
+	 * @param prmNombre
+	 * @param prmNumero
+	 * @param prmTipo
+	 * @param prmFechaIni
+	 * @param prmFechaFin
+	 * @return ResultSet
+	 */
+	public ResultSet getMovimientos(String prmId, String prmApellido, String prmNombre, String prmNumero, String prmTipo, java.util.Date prmFechaIni, java.util.Date prmFechaFin){
+		
+		String where = "where td.codigo = '" + prmTipo + "' ";
+		
+		if (!prmId.isEmpty()){
+			where = where + " AND p.id_persona = " + prmId;
+		}
+		if (!prmApellido.isEmpty()){
+			where = where + " AND apellido like '%" + prmApellido + "%'";
+		}
+		if (!prmNombre.isEmpty()){
+			where = where + " AND nombre like '%" + prmNombre + "%'";
+		}		
+		if (!prmNumero.isEmpty()){
+			where = where + " AND (numero like '%" + prmNumero + "%')";
+		}
+		java.sql.Date sqlDateFechaIni = new java.sql.Date(prmFechaIni.getTime());
+		java.sql.Date sqlDateFechaFin = new java.sql.Date(prmFechaFin.getTime());
+		
+		String query = "Select  p.id_persona, p.apellido, p.nombre, codigo as tipo_doc, numero, nro_dedo, tipo, fecha "
+				+ "from persona p join huellas h on p.id_persona = h.id_persona "
+				+ "join tipo_documento td on td.id_tipo_documento = p.id_tipo_documento "
+				+ "join movimiento m on p.id_persona = m.id_persona and h.id_huella = m.id_huella "
+				+ where + " and fecha between '" + sqlDateFechaIni + "' and '" + sqlDateFechaFin + "'" ;
+				
+    	System.out.println(query);
+    	ResultSet resultado = null;
+		try {
+			resultado = this.query(query);
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return resultado;
+	
+		
+	}
+	
+	
+	/**
 	 * Devuelvo todas las huellas
 	 * @return ResultSet
 	 */
