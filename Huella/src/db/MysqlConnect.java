@@ -546,11 +546,36 @@ public final class MysqlConnect {
 		
 	}
 	
+	/**
+	 * Devuelve los datos de una persona del Id pasado por parametro
+	 * @param int idPers
+	 * @return ResultSet
+	 */
 	public ResultSet getDatosPersona(int idPers){
 		String query = "Select p.id_persona, apellido, nombre, profesion, p.numero, td.codigo "
 				+ "from persona p join tipo_documento td on td.id_tipo_documento = p.id_tipo_documento "
 				+ " where p.id_persona = '" + idPers + "'";    	
     	
+    	ResultSet resultado = null;
+		try {
+			resultado = this.query(query);
+		} catch (SQLException e) {			
+			e.printStackTrace();
+		}
+		return resultado;
+	}
+	
+	/**
+	 * Devuelve todas las huellas del id persona pasado por parametro
+	 * @param int idPers
+	 * @return ResultSet
+	 */
+	public ResultSet getHuellas(int idPers){
+		
+		String query = "Select p.id_persona, apellido, nombre, h.id_huella, h.huella, h.nro_dedo "
+				+ "from persona p join huellas h on p.id_persona = h.id_persona "
+				+ " where p.id_persona = " + idPers + " ; ";    	
+
     	ResultSet resultado = null;
 		try {
 			resultado = this.query(query);
