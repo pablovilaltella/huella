@@ -2,6 +2,7 @@ package com.digitalpersona.onetouch.ui.swing.sample.UISupport;
 
 import com.digitalpersona.onetouch.*;
 import com.digitalpersona.onetouch.verification.DPFPVerification;
+import db.MysqlConnect;
 
 import javax.swing.*;
 import javax.swing.text.DefaultFormatter;
@@ -10,6 +11,8 @@ import java.awt.*;
 import java.awt.event.*;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 
 /**
@@ -37,6 +40,7 @@ public class MainForm
     private JTextField farAchieved;
     JCheckBox fingerMatched;
     private int idPersonaAEnrolar;
+    private MysqlConnect conection;
 
     static {
         fakeTemplate = DPFPGlobal.getTemplateFactory().createTemplate();
@@ -50,10 +54,13 @@ public class MainForm
     public MainForm() {
     	super("Enrolar huella");
     	setState(Frame.NORMAL);
-    	setResizable(false);    	
-
-    	//// Enrollment Panel
+    	setResizable(false);
+    	setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
     	
+    	// traigo la conexion
+    	conection = MysqlConnect.getDbCon();
+    	
+    	//// Enrollment Panel    	
         JPanel enrollmentConfigPanel = new JPanel();
 //        enrollmentConfigPanel.setBorder(BorderFactory.createTitledBorder("Enrollment"));
         enrollmentConfigPanel.setLayout(new BoxLayout(enrollmentConfigPanel, BoxLayout.Y_AXIS));
@@ -170,6 +177,7 @@ public class MainForm
         JSpinner.DefaultEditor farEditor = (JSpinner.DefaultEditor)farRequestedSpinner.getEditor();
         DefaultFormatter farFormatter = (DefaultFormatter)(farEditor.getTextField().getFormatter());
         farFormatter.setAllowsInvalid(false);
+        farRequestedSpinner.setEnabled(false);
         
         farPanel.add(farRequestedSpinner, gridBagConstraints);
 
@@ -235,6 +243,16 @@ public class MainForm
         dummy.add(Box.createVerticalStrut(4));
         dummy.add(enrollmentConfigPanel);
         dummy.add(verificationConfigPanel);
+        
+        JButton btnCerrar = new JButton("Cerrar");
+        btnCerrar.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent arg0) {
+        		mensajeError();
+        	}
+        });
+        btnCerrar.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        dummy.add(btnCerrar);
         dummy.add(Box.createVerticalStrut(4));
 
         getContentPane().setLayout(new BoxLayout(getContentPane(), BoxLayout.X_AXIS));
@@ -272,6 +290,36 @@ public class MainForm
 
 	public void setIdPersonaAEnrolar(int idPersonaAEnrolar) {
 		this.idPersonaAEnrolar = idPersonaAEnrolar;
+	}
+	
+	/**
+	 * Si la persona no tiene huellas no permite cerrar, sino cierra el dialog
+	 */
+	public void mensajeError(){
+
+		if (!existeAlgunaHuella()){
+			JOptionPane.showMessageDialog(getContentPane(),"Debe guardar al menos una huella","Error",JOptionPane.ERROR_MESSAGE);
+		}else{
+			dispose();
+		} 
+	}
+	
+	/**
+	 * Devuelve True si la persona tiene alguna huella guardada
+	 * @return boolean 
+	 */
+	public boolean existeAlgunaHuella(){
+		boolean resultado = false;
+		if (getIdPersonaAEnrolar() != 0){
+			
+			ResultSet huellas = conection.getHuellas(getIdPersonaAEnrolar());
+			try {
+				resultado = huellas.first();			
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return resultado;
 	}
 
 }
