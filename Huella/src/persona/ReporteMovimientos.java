@@ -124,7 +124,7 @@ public class ReporteMovimientos extends JFrame {
         JDatePanelImpl datePanel = new JDatePanelImpl(modelFI, p);
         
         datePickerFI = new JDatePickerImpl(datePanel, null);
-        datePickerFI.setBounds(122,106,156,23);
+        datePickerFI.setBounds(122,102,156,23);
         getContentPane().add(datePickerFI);
         Date selectedDate = (Date) datePickerFI.getModel().getValue();
         Format formatter = new SimpleDateFormat("dd/MM/yyyy");
@@ -154,7 +154,7 @@ public class ReporteMovimientos extends JFrame {
         JDatePanelImpl datePanelFF = new JDatePanelImpl(modelFF, p);
         
         datePickerFF = new JDatePickerImpl(datePanelFF, null);
-        datePickerFF.setBounds(400,106,156,23);
+        datePickerFF.setBounds(400,102,156,23);
         getContentPane().add(datePickerFF);
         Date selectedDateFF = (Date) datePickerFF.getModel().getValue();
 		String stringDateFF = formatter.format(selectedDateFF);
@@ -224,11 +224,11 @@ public class ReporteMovimientos extends JFrame {
 		getContentPane().add(btnCerrar);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha Inicio:");
-		lblFechaInicio.setBounds(22, 106, 79, 20);
+		lblFechaInicio.setBounds(22, 102, 79, 20);
 		getContentPane().add(lblFechaInicio);
 		
 		JLabel lblFechaFin = new JLabel("Fecha Fin:");
-		lblFechaFin.setBounds(322, 106, 79, 20);
+		lblFechaFin.setBounds(322, 102, 79, 20);
 		getContentPane().add(lblFechaFin);
 		
 		setVisible(true);
