@@ -81,18 +81,6 @@ public class MainMenu extends JFrame {
         mntmNewMenuItem.addActionListener(nuevaPersona);        
         mnInicio.add(mntmNewMenuItem);
         
-        // BUSCAR PERSONA
-        JMenuItem mntmMenuItemBuscarPersona = new JMenuItem("Buscar Persona");
-        ActionListener buscarPersona = new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-            	new BuscarPersona();
-            }   
-        };
-        
-        mntmMenuItemBuscarPersona.addActionListener(buscarPersona);
-        mnInicio.add(mntmMenuItemBuscarPersona);
-        
-        
         // INGRESO
         JMenuItem mntmMenuItemIngreso = new JMenuItem("Ingreso");
         ActionListener ingreso = new ActionListener() {
@@ -104,7 +92,6 @@ public class MainMenu extends JFrame {
         
         mntmMenuItemIngreso.addActionListener(ingreso);
         mnInicio.add(mntmMenuItemIngreso);
-        
         
         // EGRESO
         JMenuItem mntmMenuItemEgreso = new JMenuItem("Egreso");
@@ -121,6 +108,18 @@ public class MainMenu extends JFrame {
 		JMenu mnReportes = new JMenu("Reportes");
 		menuBar.add(mnReportes);
 		
+		// BUSCAR PERSONA
+        JMenuItem mntmMenuItemBuscarPersona = new JMenuItem("Personas");
+        ActionListener buscarPersona = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	new BuscarPersona();
+            }   
+        };
+        
+        mntmMenuItemBuscarPersona.addActionListener(buscarPersona);
+        mnReportes.add(mntmMenuItemBuscarPersona);
+		
+		// MOVIMIENTOS
 		JMenuItem mntmListado = new JMenuItem("Movimentos");
 		
 		ActionListener listadoListener = new ActionListener() {
@@ -134,10 +133,10 @@ public class MainMenu extends JFrame {
 		mnReportes.add(mntmListado);
 		getContentPane().setLayout(null);
 		
-		
 		JMenu mnUsuarios = new JMenu("Usuario");
 		menuBar.add(mnUsuarios);
 		
+		// NUEVO USUARIO
 		JMenuItem mntmNuevoUsuario = new JMenuItem("Nuevo");
 		
 		ActionListener nuevoUsuarioListener = new ActionListener() {
@@ -150,6 +149,7 @@ public class MainMenu extends JFrame {
 		mnUsuarios.add(mntmNuevoUsuario);
 		getContentPane().setLayout(null);		
 		
+		// MI CLAVE
 		JMenuItem mntmCambiarClave = new JMenuItem("Mi clave");
 		
 		ActionListener cambiarClaveListener = new ActionListener() {
@@ -160,7 +160,6 @@ public class MainMenu extends JFrame {
         
 		mntmCambiarClave.addActionListener(cambiarClaveListener);
 		mnUsuarios.add(mntmCambiarClave);
-		
 		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
