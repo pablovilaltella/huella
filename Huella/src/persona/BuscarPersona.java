@@ -108,7 +108,7 @@ public class BuscarPersona extends JFrame {
 		getContentPane().add(btnBuscar);
 		
 		textFieldNumero = new JTextField();
-		textFieldNumero.setBounds(475, 63, 150, 20);
+		textFieldNumero.setBounds(245, 63, 150, 20);
 		getContentPane().add(textFieldNumero);
 		textFieldNumero.setColumns(10);
 		
@@ -117,7 +117,7 @@ public class BuscarPersona extends JFrame {
 		getContentPane().add(lblTipoDoc);
 		
 		lblNumero = new JLabel("N\u00FAmero:");
-		lblNumero.setBounds(422, 63, 51, 20);
+		lblNumero.setBounds(192, 63, 51, 20);
 		getContentPane().add(lblNumero);
 		
 		JLabel lblId = new JLabel("Id:");
@@ -139,12 +139,12 @@ public class BuscarPersona extends JFrame {
 		getContentPane().add(btnCerrar);
 		
 		lblProfesin = new JLabel("Profesi\u00F3n:");
-		lblProfesin.setBounds(193, 63, 62, 20);
+		lblProfesin.setBounds(414, 63, 60, 20);
 		getContentPane().add(lblProfesin);
 		
 		textFieldProfesion = new JTextField();
 		textFieldProfesion.setColumns(10);
-		textFieldProfesion.setBounds(265, 63, 150, 20);
+		textFieldProfesion.setBounds(475, 63, 150, 20);
 		getContentPane().add(textFieldProfesion);
 		
 		
