@@ -109,7 +109,7 @@ public class Login extends JDialog {
 						if (result){
 							// Llamada al MAINFORM
 							usuarioConectado = textFieldUser.getText();
-							MainMenu menu = new MainMenu();
+							MainMenu menu = new MainMenu(usuarioConectado);
 							menu.setUsuarioConectado(usuarioConectado);
 							setVisible(false);								
 						}else{
