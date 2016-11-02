@@ -511,7 +511,7 @@ public final class MysqlConnect {
 				+ "from persona p join huellas h on p.id_persona = h.id_persona "
 				+ "join tipo_documento td on td.id_tipo_documento = p.id_tipo_documento "
 				+ "join movimiento m on p.id_persona = m.id_persona and h.id_huella = m.id_huella "
-				+ where + " and fecha between '" + sqlDateFechaIni + "' and '" + sqlDateFechaFin + "'" ;
+				+ where + " and date(fecha) between '" + sqlDateFechaIni + "' and '" + sqlDateFechaFin + "'" ;
 				
     	System.out.println(query);
     	ResultSet resultado = null;
