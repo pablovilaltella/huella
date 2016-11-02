@@ -1,9 +1,6 @@
 package com.digitalpersona.onetouch.ui.swing.sample.UISupport;
 
-import java.awt.EventQueue;
 import java.awt.Frame;
-
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
@@ -17,6 +14,7 @@ import persona.BuscarPersona;
 import persona.PersonaABM;
 import persona.RegistroMovimiento;
 import persona.ReporteMovimientos;
+import persona.UsuarioABM;
 
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
@@ -39,7 +37,7 @@ public class MainMenu extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -51,12 +49,12 @@ public class MainMenu extends JFrame {
 				}
 			}
 		});
-	}
+	}*/
 
 	/**
 	 * Create the dialog.
 	 */
-	public MainMenu() {
+	public MainMenu(String usuario) {
 		
 		super("Sistema de Control de ingreso");
 		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Pablo\\git\\huella\\Huella\\dist\\huellaBinario.png"));
@@ -136,6 +134,34 @@ public class MainMenu extends JFrame {
 		mnReportes.add(mntmListado);
 		getContentPane().setLayout(null);
 		
+		
+		JMenu mnUsuarios = new JMenu("Usuario");
+		menuBar.add(mnUsuarios);
+		
+		JMenuItem mntmNuevoUsuario = new JMenuItem("Nuevo");
+		
+		ActionListener nuevoUsuarioListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	new UsuarioABM(null);
+            }   
+        };
+        
+		mntmNuevoUsuario.addActionListener(nuevoUsuarioListener);
+		mnUsuarios.add(mntmNuevoUsuario);
+		getContentPane().setLayout(null);		
+		
+		JMenuItem mntmCambiarClave = new JMenuItem("Mi clave");
+		
+		ActionListener cambiarClaveListener = new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+            	new UsuarioABM(lblUsuarioConectado.getText());
+            }   
+        };
+        
+		mntmCambiarClave.addActionListener(cambiarClaveListener);
+		mnUsuarios.add(mntmCambiarClave);
+		
+		
 		JPanel panel = new JPanel();
 		getContentPane().add(panel);
 		panel.setLayout(null);
@@ -190,6 +216,9 @@ public class MainMenu extends JFrame {
 		btnBuscarPersona.setBounds(75, 237, 130, 49);
 		getContentPane().add(btnBuscarPersona);
 
+		if (!usuario.equals("admin")){
+			mntmNuevoUsuario.setEnabled(false);
+		}
 		setVisible(true);
 	}
 }
