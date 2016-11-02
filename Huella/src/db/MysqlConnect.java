@@ -115,9 +115,9 @@ public final class MysqlConnect {
      * @param pass String
      * @return ResultSet 
      */
-    public ResultSet getUser(String user, String pass){
+    public ResultSet getUser(String user){
     	   	
-    	String query ="Select usuario,clave from usuario where usuario = '" + user + "'" + "and clave = '" + pass + "'";    	
+    	String query ="Select usuario,clave from usuario where usuario = '" + user + "'";    	
     	
     	ResultSet res = null;
 		try {
@@ -153,13 +153,66 @@ public final class MysqlConnect {
     	return correcto;
     }
     
-    
-    public void saveUser() throws NoSuchAlgorithmException, InvalidKeySpecException
+    /**
+     * Guardar el usuario y pass pasado por parametro
+     * @param String paramUser
+     * @param String paramPass
+     * @throws NoSuchAlgorithmException
+     * @throws InvalidKeySpecException
+     */
+    public void saveUser(String paramUser, String paramClave) throws NoSuchAlgorithmException, InvalidKeySpecException
     {
-    	// TODO: Hay que hacer un crear usuario y pass con hash para los usuarios
+    	try {
+    		// the mysql insert statement
+    	      String query = " insert into usuario (usuario, clave)"
+    	        + " values (?, ?)";
+
+    	      String originalPassword = paramClave;
+    	      // create the mysql insert preparedstatement
+    	      PreparedStatement preparedStmt = conn.prepareStatement(query);
+    	      
+    	      String generatedSecuredPasswordHash = generateStorngPasswordHash(originalPassword);
+    	      System.out.println(generatedSecuredPasswordHash);
+
+    	      preparedStmt.setString (1, paramUser);
+    	      preparedStmt.setString (2, generatedSecuredPasswordHash);
+
+    	      // execute the preparedstatement
+    	      preparedStmt.execute();    	
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
     	
-    	
-    	/* HACER INSERT DIRECTAMENTE SI ES POR UNICA VEZ */
+    }
+    
+    public void updateClave(String paramUser, String paramClave) throws NoSuchAlgorithmException, InvalidKeySpecException{
+    	try {
+    		// the mysql insert statement
+    	      String query = " UPDATE usuario SET clave = ? WHERE usuario = ?";
+
+    	      String originalPassword = paramClave;
+    	      // create the mysql update preparedstatement
+    	      PreparedStatement preparedStmt = conn.prepareStatement(query);
+    	      
+    	      String generatedSecuredPasswordHash = generateStorngPasswordHash(originalPassword);
+    	      System.out.println(generatedSecuredPasswordHash);
+
+    	      preparedStmt.setString (1, generatedSecuredPasswordHash);
+    	      preparedStmt.setString (2, paramUser);
+
+    	      // execute the preparedstatement
+    	      preparedStmt.execute();    	
+		} catch (SQLException e) {
+
+			e.printStackTrace();
+		}
+
+    }
+    
+    public void saveAdmin() throws NoSuchAlgorithmException, InvalidKeySpecException
+    {
+    	/* Guarda el admin */
     	try {
     		// the mysql insert statement
     	      String query = " insert into usuario (usuario, clave)"
@@ -172,23 +225,12 @@ public final class MysqlConnect {
     	      String generatedSecuredPasswordHash = generateStorngPasswordHash(originalPassword);
     	      System.out.println(generatedSecuredPasswordHash);
 
-    	      preparedStmt.setString (1, "Admin");
+    	      preparedStmt.setString (1, "admin");
     	      preparedStmt.setString (2, generatedSecuredPasswordHash);
-    	      //res.updateString("clave", generatedSecuredPasswordHash);
-    	      //res.updateRow();
 
     	      // execute the preparedstatement
     	      preparedStmt.execute();
     	      
-    	      //conn.close();
-    	    /*  Statement stmt = conn.createStatement(
-    	        ResultSet.TYPE_SCROLL_SENSITIVE,
-    	        ResultSet.CONCUR_UPDATABLE);
-    	      ResultSet res = getUser("admin", "admin");
-    	
-    	
-			if (res.next()){*/
-			//}
 		} catch (SQLException e) {
 
 			e.printStackTrace();
