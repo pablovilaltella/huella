@@ -109,10 +109,10 @@ public class RegistroMovimiento extends JFrame{
 		btnBuscarHuella.setBounds(25, 30, 120, 25);
 		getContentPane().add(btnBuscarHuella);
 		
-		JButton btnNewButton = new JButton("Detalle Persona");
-		btnNewButton.setIcon(null);
-		btnNewButton.setBounds(102, 254, 140, 25);
-		getContentPane().add(btnNewButton);
+		JButton btnDetallePersona = new JButton("Detalle Persona");		
+		btnDetallePersona.setBounds(102, 254, 140, 25);
+		getContentPane().add(btnDetallePersona);
+		btnDetallePersona.setVisible(false);
 		
 		JButton btnGuardar = new JButton("Guardar " + getNombreMovimiento());
 		btnGuardar.addActionListener(new ActionListener() {
@@ -148,7 +148,7 @@ public class RegistroMovimiento extends JFrame{
 
 	protected boolean existeHuella() {
 		boolean retorno = false;
-		if (lblDatoId.getText() != ""){
+		if ((lblDatoId.getText() != "") && (!lblDatoId.getText().equals("0"))) {
 			retorno = true;
 		}
 		
