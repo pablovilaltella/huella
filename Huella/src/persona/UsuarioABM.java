@@ -41,6 +41,7 @@ public class UsuarioABM extends JDialog {
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(null);
+		setIconImage(getToolkit().getImage(getClass().getResource("/user_icon.png")));
 		
 		// traigo la conexion
 		conection = MysqlConnect.getDbCon();
@@ -52,10 +53,14 @@ public class UsuarioABM extends JDialog {
 		textFieldUser.setBounds(111, 24, 130, 20);
 		contentPanel.add(textFieldUser);
 		textFieldUser.setColumns(10);
-		if (!usuarioConectado.equals(null)){
+		if (usuarioConectado != null){
 			textFieldUser.setText(usuarioConectado);
 			textFieldUser.setEnabled(false);
 		}
+//		if (!usuarioConectado.equals(null)){
+//			textFieldUser.setText(usuarioConectado);
+//			textFieldUser.setEnabled(false);
+//		}
 
 		JLabel lblPass = new JLabel("Clave:");
 		lblPass.setBounds(12, 61, 70, 20);
@@ -87,7 +92,7 @@ public class UsuarioABM extends JDialog {
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						// si es null es nuevo usuario
-						if (usuarioConectado.equals(null)){							
+						if (usuarioConectado == null){							
 							if (existeUsuario()){
 								JOptionPane.showMessageDialog(getContentPane(),"Ya existe el usuario, seleccione otro","Error",JOptionPane.ERROR_MESSAGE);
 							}
