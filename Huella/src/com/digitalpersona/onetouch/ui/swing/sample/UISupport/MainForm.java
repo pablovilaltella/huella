@@ -33,7 +33,7 @@ public class MainForm
     private JSpinner maxCountSpinner;
 
     private final JButton enrollButton = new JButton("Enrolar Huellas");
-    private final JButton verifyButton = new JButton("Verify Fingerprint");
+    private final JButton verifyButton = new JButton("Verificar Huellas");
     private SpinnerNumberModel farRequested = 
     	new SpinnerNumberModel(	DPFPVerification.MEDIUM_SECURITY_FAR, 1, DPFPVerification.PROBABILITY_ONE, 100);
     private JSpinner farRequestedSpinner;
@@ -88,6 +88,7 @@ public class MainForm
             gridBagConstraints.gridy = rows - 1 - Math.abs(rows - 1 - finger.ordinal()) + gridBagConstraints.gridx;
             gridBagConstraints.anchor = GridBagConstraints.WEST;
             fingersPanel.add(jCheckBox, gridBagConstraints);
+            jCheckBox.setEnabled(false);
             checkBoxes.put(finger, jCheckBox);
 
             final DPFPFingerIndex dummyFinger = finger;
@@ -204,6 +205,7 @@ public class MainForm
         fingerMatched.setEnabled(false);
         fingerMatched.setAlignmentX(CENTER_ALIGNMENT);
         fingerMatched.setHorizontalTextPosition(SwingConstants.LEADING);
+        fingerMatched.setVisible(false);
         
         ///// Button
         verifyButton.addActionListener(new ActionListener()
