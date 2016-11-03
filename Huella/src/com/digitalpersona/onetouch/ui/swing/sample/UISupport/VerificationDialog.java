@@ -81,7 +81,8 @@ public class VerificationDialog
 
 		JPanel center = new JPanel();
 		center.add(verificationControl);
-		center.add(new JLabel("To verify your identity, touch fingerprint reader with any enrolled finger."));
+//		center.add(new JLabel("To verify your identity, touch fingerprint reader with any enrolled finger."));
+		center.add(new JLabel("Para verificar su identidad, coloque su dedo en el lector."));
 
 		JPanel bottom = new JPanel();
 		bottom.add(closeButton);
