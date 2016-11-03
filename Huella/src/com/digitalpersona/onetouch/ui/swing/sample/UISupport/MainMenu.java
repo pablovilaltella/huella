@@ -19,7 +19,6 @@ import persona.UsuarioABM;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Toolkit;
 
 public class MainMenu extends JFrame {
 
@@ -57,7 +56,8 @@ public class MainMenu extends JFrame {
 	public MainMenu(String usuario) {
 		
 		super("Sistema de Control de ingreso");
-		setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Pablo\\git\\huella\\Huella\\dist\\huellaBinario.png"));
+
+		setIconImage(getToolkit().getImage(getClass().getResource("/huellaBinario.png")));
 		setState(Frame.NORMAL);
 		setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 		setResizable(false);

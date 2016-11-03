@@ -56,7 +56,8 @@ public class MainForm
     	setState(Frame.NORMAL);
     	setResizable(false);
     	setDefaultCloseOperation(WindowConstants.DO_NOTHING_ON_CLOSE);
-    	
+		setIconImage(getToolkit().getImage(getClass().getResource("/huellaBinario.png")));
+		
     	// traigo la conexion
     	conection = MysqlConnect.getDbCon();
     	

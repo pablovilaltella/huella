@@ -49,7 +49,7 @@ public class ReporteMovimientos extends JFrame {
 	public ReporteMovimientos(){
 		
 		super("Movimientos");
-		//setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Pablo\\git\\huella\\Huella\\dist\\person_icon.png"));
+		setIconImage(getToolkit().getImage(getClass().getResource("/huellaBinario.png")));
 		
 		setState(Frame.NORMAL);
 		setResizable(false);

@@ -38,7 +38,7 @@ public class BuscarPersona extends JFrame {
 	public BuscarPersona(){
 		
 		super("Buscar Persona");
-		//setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\Pablo\\git\\huella\\Huella\\dist\\person_icon.png"));
+		setIconImage(getToolkit().getImage(getClass().getResource("/person_icon.png")));
 		
 		setState(Frame.NORMAL);
 		setResizable(false);

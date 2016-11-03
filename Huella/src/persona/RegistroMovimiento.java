@@ -49,6 +49,7 @@ public class RegistroMovimiento extends JFrame{
 		setBounds(100, 100, 350, 330);
 		setLocationRelativeTo(null);
 		getContentPane().setLayout(null);
+		setIconImage(getToolkit().getImage(getClass().getResource("/huellaBinario.png")));
 		
 		// traigo la conexion
 		MysqlConnect conection = MysqlConnect.getDbCon();
