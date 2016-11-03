@@ -14,7 +14,6 @@ import javax.swing.SwingConstants;
 
 import com.digitalpersona.onetouch.ui.swing.sample.UISupport.MainForm;
 
-import java.awt.Toolkit;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JButton;
