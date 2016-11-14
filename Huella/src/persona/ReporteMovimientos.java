@@ -1,31 +1,39 @@
 package persona;
 
 import java.awt.Frame;
-
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.Format;
 import java.text.SimpleDateFormat;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 import db.MysqlConnect;
+import utilities.Exporter;
+
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
 
 import org.jdatepicker.impl.JDatePickerImpl;
 import org.jdatepicker.impl.JDatePanelImpl;
 import org.jdatepicker.impl.UtilDateModel;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties; 
 
 public class ReporteMovimientos extends JFrame {
@@ -211,7 +219,7 @@ public class ReporteMovimientos extends JFrame {
 				}
 			}
 		});
-		btnBuscar.setBounds(655, 19, 89, 23);
+		btnBuscar.setBounds(655, 20, 105, 23);
 		getContentPane().add(btnBuscar);
 		
 		JButton btnCerrar = new JButton("Cerrar");
@@ -220,7 +228,7 @@ public class ReporteMovimientos extends JFrame {
 				dispose();
 			}
 		});
-		btnCerrar.setBounds(655, 62, 89, 23);
+		btnCerrar.setBounds(655, 63, 105, 23);
 		getContentPane().add(btnCerrar);
 		
 		JLabel lblFechaInicio = new JLabel("Fecha Inicio:");
@@ -230,6 +238,17 @@ public class ReporteMovimientos extends JFrame {
 		JLabel lblFechaFin = new JLabel("Fecha Fin:");
 		lblFechaFin.setBounds(322, 102, 79, 20);
 		getContentPane().add(lblFechaFin);
+		
+		JButton btnExportar = new JButton("Exportar");
+		Image imagen = getToolkit().getImage(getClass().getResource("/excel_icon.png"));
+		btnExportar.setIcon(new ImageIcon(imagen));
+		btnExportar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				exportarAExcel(arg0);
+			}
+		});
+		btnExportar.setBounds(655, 102, 105, 23);
+		getContentPane().add(btnExportar);
 		
 		setVisible(true);
 	}
@@ -264,5 +283,42 @@ public class ReporteMovimientos extends JFrame {
 			verifico = false;
 		}
 		return verifico;
+	}
+	
+	/**
+	 * Exportar a Excel
+	 * @param evt
+	 */
+	private void exportarAExcel(java.awt.event.ActionEvent evt) {                                            
+
+        if (this.table.getRowCount()==0) {
+            JOptionPane.showMessageDialog (null, "No hay datos en la tabla para exportar.","Atención",
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JFileChooser chooser=new JFileChooser();
+        FileNameExtensionFilter filter=new FileNameExtensionFilter("Archivos de excel","xls");
+        chooser.setFileFilter(filter);
+        chooser.setDialogTitle("Guardar archivo");
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setAcceptAllFileFilterUsed(false);
+        
+        if (chooser.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
+            List<JTable> tb=new ArrayList<>();
+            List<String>nom=new ArrayList<>();
+            tb.add(table);
+            nom.add("Movimientos");
+            String file=chooser.getSelectedFile().toString().concat(".xls");
+            try {
+                Exporter e= new Exporter(new File(file),tb, nom);
+                if (e.export()) {
+                    JOptionPane.showMessageDialog(null, "Los datos fueron exportados a excel.","BCO",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null,"Hubo un error"+ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            }
+        }
 	}
 }

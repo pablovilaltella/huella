@@ -1,20 +1,30 @@
 package persona;
 
 import java.awt.Frame;
+import java.awt.Image;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JFrame;
 
 import db.MysqlConnect;
+import utilities.Exporter;
+
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
+import javax.swing.JFileChooser;
 import javax.swing.JTextField;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.awt.event.ActionEvent;
 
 public class BuscarPersona extends JFrame {
@@ -34,6 +44,7 @@ public class BuscarPersona extends JFrame {
 	private JTextField textFieldId;
 	private JLabel lblProfesin;
 	private JTextField textFieldProfesion;
+	private JButton btnExportar;
 
 	public BuscarPersona(){
 		
@@ -104,7 +115,7 @@ public class BuscarPersona extends JFrame {
 				dm.fireTableDataChanged();
 			}
 		});
-		btnBuscar.setBounds(655, 19, 89, 23);
+		btnBuscar.setBounds(655, 13, 105, 23);
 		getContentPane().add(btnBuscar);
 		
 		textFieldNumero = new JTextField();
@@ -135,7 +146,7 @@ public class BuscarPersona extends JFrame {
 				dispose();
 			}
 		});
-		btnCerrar.setBounds(655, 62, 89, 23);
+		btnCerrar.setBounds(655, 43, 105, 23);
 		getContentPane().add(btnCerrar);
 		
 		lblProfesin = new JLabel("Profesi\u00F3n:");
@@ -146,6 +157,17 @@ public class BuscarPersona extends JFrame {
 		textFieldProfesion.setColumns(10);
 		textFieldProfesion.setBounds(475, 63, 150, 20);
 		getContentPane().add(textFieldProfesion);
+		
+		btnExportar = new JButton("Exportar");
+		Image imagen = getToolkit().getImage(getClass().getResource("/excel_icon.png"));
+		btnExportar.setIcon(new ImageIcon(imagen));
+		btnExportar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				exportarAExcel(arg0);
+			}
+		});
+		btnExportar.setBounds(655, 73, 105, 23);
+		getContentPane().add(btnExportar);
 		
 		
 		setVisible(true);
@@ -165,4 +187,42 @@ public class BuscarPersona extends JFrame {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Exportar a Excel
+	 * @param evt
+	 */
+	private void exportarAExcel(java.awt.event.ActionEvent evt) {                                            
+
+        if (this.table.getRowCount()==0) {
+            JOptionPane.showMessageDialog (null, "No hay datos en la tabla para exportar.","Atención",
+                JOptionPane.INFORMATION_MESSAGE);
+            return;
+        }
+        JFileChooser chooser=new JFileChooser();
+        FileNameExtensionFilter filter=new FileNameExtensionFilter("Archivos de excel","xls");
+        chooser.setFileFilter(filter);
+        chooser.setDialogTitle("Guardar archivo");
+        chooser.setMultiSelectionEnabled(false);
+        chooser.setAcceptAllFileFilterUsed(false);
+        
+        if (chooser.showSaveDialog(null)==JFileChooser.APPROVE_OPTION){
+            List<JTable> tb=new ArrayList<>();
+            List<String>nom=new ArrayList<>();
+            tb.add(table);
+            nom.add("Personas");
+            String file=chooser.getSelectedFile().toString().concat(".xls");
+            try {
+                Exporter e= new Exporter(new File(file),tb, nom);
+                if (e.export()) {
+                    JOptionPane.showMessageDialog(null, "Los datos fueron exportados a excel.","BCO",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                }
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(null,"Hubo un error"+ex.getMessage(),"Error",JOptionPane.ERROR_MESSAGE);
+            }
+        }
+	}
+	
 }
