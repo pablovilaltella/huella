@@ -312,7 +312,7 @@ public class ReporteMovimientos extends JFrame {
             try {
                 Exporter e= new Exporter(new File(file),tb, nom);
                 if (e.export()) {
-                    JOptionPane.showMessageDialog(null, "Los datos fueron exportados a excel.","BCO",
+                    JOptionPane.showMessageDialog(null, "Los datos fueron exportados a excel.","",
                         JOptionPane.INFORMATION_MESSAGE);
 
                 }
